@@ -17,6 +17,7 @@ public class LocationDaoDBImpl implements LocationDao{
     @Autowired
     JdbcTemplate jdbc;
 
+
     @Override
     public List<Location> getAllLocations() {
         final String SELECT_ALL_LOCATIONS = "SELECT * FROM Location";
@@ -56,10 +57,12 @@ public class LocationDaoDBImpl implements LocationDao{
         return location;
     }
 
+    //
+
     @Override
     public void updateLocation(Location location) {
         final String UPDATE_LOCATION = "UPDATE Location SET locationName=?, Description=?, "
-                + "street1=?, street2=?, city=?, state=?, zipcode=?, country=?, locationLat=?, "
+                + "street=?, city=?, state=?, zipcode=?, locationLat=?, "
                 + "locationLong=? WHERE locationID=?";
         jdbc.update(UPDATE_LOCATION,
                 location.getLocationName(),
