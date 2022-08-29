@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.*;
 
 @SpringBootTest
 public class LocationDaoDBImplTest {
@@ -42,22 +42,105 @@ public class LocationDaoDBImplTest {
 
     @Test
     public void testAddAndGetLocation() {
-        Location testLoc = new Location();
+        // ARRANGE
+        Location loc = new Location();
+        loc.setLocationName("Farmers' Market");
+        loc.setLocationDescription("Large store for everything");
+        loc.setStreet("123 Fine Street");
+        loc.setCity("Ted City");
+        loc.setState("OV");
+        loc.setZipCode("12399");
+        loc.setLocationLat("033-sl-934");
+        loc.setLocationLong("123-kj-234");
 
-        testLoc.setLocationName("Hope City Football club");
-        testLoc.setLocationDescription("South side of the city");
-        testLoc.setLocationStreet("2nd St");
-        testLoc.setLocationCity("Hope City");
-        testLoc.setLocationState("CR");
-        testLoc.setLocationZipCode("22222");
-        testLoc.setLocationLong(" -79.653 ");
-        testLoc.setLocationLat("55.2294");
+        // ACT
+        // add location
+        locationDao.addLocation(loc);
+       // get location by id
+        Location locFromDao = locationDao.getLocationById(loc.getLocationId());
 
-        testLoc = locationDao.addLocation(testLoc);
+        // ASSERT
+        assertEquals(loc, locFromDao);
+    }
 
-        Location locFromDao = locationDao.getLocationById(testLoc.getLocationId());
+    @Test
+    public void testGetAllLocations() {
+        Location location1 = new Location();
+        location1.setLocationName("Marv Store");
+        location1.setLocationDescription("The store is on the side fo the road");
+        location1.setStreet("567 Well Street");
+        location1.setCity("Big city");
+        location1.setState("AK");
+        location1.setZipCode("00433");
+        location1.setLocationLat("033-sl-934");
+        location1.setLocationLong("123-kj-234");
+        locationDao.addLocation(location1);
 
-        assertEquals(testLoc, locFromDao);
+        Location location2 = new Location();
+        location2.setLocationName("KC High school");
+        location2.setLocationDescription("The school is a new building");
+        location2.setStreet("564 edu Street");
+        location2.setCity("Education City");
+        location2.setState("HS");
+        location2.setZipCode("22055");
+        location2.setLocationLat("549-mn-321");
+        location2.setLocationLong("234-tm-004");
+        locationDao.addLocation(location2);
+
+        List<Location> locationList = locationDao.getAllLocations();
+
+        assertEquals(2, locationList.size());
+        assertTrue(locationList.contains(location1));
+        assertTrue(locationList.contains(location2));
+    }
+
+    @Test
+    public void testUpdateLocation() {
+        Location loc = new Location();
+        loc.setLocationName("Marv Store");
+        loc.setLocationDescription("The store is on the side fo the road");
+        loc.setStreet("567 Well Street");
+        loc.setCity("Big city");
+        loc.setState("AK");
+        loc.setZipCode("00433");
+        loc.setLocationLat("033-sl-934");
+        loc.setLocationLong("123-kj-234");
+        locationDao.addLocation(loc);
+
+        Location fromDAO = locationDao.getLocationById(loc.getLocationId());
+        assertEquals(loc, fromDAO);
+
+        loc.setLocationName("Updated New Marv Store");
+        locationDao.updateLocation(loc);
+
+        assertNotEquals(loc, fromDAO);
+
+        fromDAO = locationDao.getLocationById(loc.getLocationId());
+        assertEquals(loc, fromDAO);
+    }
+
+
+    @Test
+    public void testDeleteLocationById() {
+
+        Location loc = new Location();
+        loc.setLocationName("C Mart");
+        loc.setLocationDescription("Large store for everything");
+        loc.setStreet("123 Fine Street");
+        loc.setCity("Ted City");
+        loc.setState("OV");
+        loc.setZipCode("12399");
+        loc.setLocationLat("033-sl-934");
+        loc.setLocationLong("123-kj-234");
+        locationDao.addLocation(loc);
+
+        Location locFromDao = locationDao.getLocationById(loc.getLocationId());
+        assertEquals(loc, locFromDao);
+
+        locationDao.deleteLocationById(loc.getLocationId());
+
+        locFromDao = locationDao.getLocationById(loc.getLocationId());
+        assertNull(locFromDao);
     }
 
 }

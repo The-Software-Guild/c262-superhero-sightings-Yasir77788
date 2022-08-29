@@ -40,15 +40,15 @@ public class LocationDaoDBImpl implements LocationDao{
     @Transactional
     public Location addLocation(Location location) {
         final String INSERT_LOCATION = "INSERT INTO Location(locationName, locationDescription, "
-                + "street, city, state, zipcode,locationLat, locationLong) "
+                + "street, city, state, zipCode,locationLat, locationLong) "
                 + "VALUES(?,?,?,?,?,?,?,?)";
         jdbc.update(INSERT_LOCATION,
                 location.getLocationName(),
                 location.getLocationDescription(),
-                location.getLocationStreet(),
-                location.getLocationCity(),
-                location.getLocationState(),
-                location.getLocationZipCode(),
+                location.getStreet(),
+                location.getCity(),
+                location.getState(),
+                location.getZipCode(),
                 location.getLocationLat(),
                 location.getLocationLong());
 
@@ -57,19 +57,19 @@ public class LocationDaoDBImpl implements LocationDao{
         return location;
     }
 
-    //
 
     @Override
     public void updateLocation(Location location) {
-        final String UPDATE_LOCATION = "UPDATE Location SET locationName=?, Description=?, "
+        final String UPDATE_LOCATION = "UPDATE Location SET locationName=?, locationDescription=?, "
                 + "street=?, city=?, state=?, zipcode=?, locationLat=?, "
-                + "locationLong=? WHERE locationID=?";
+                + "locationLong=? WHERE locationId=?";
         jdbc.update(UPDATE_LOCATION,
                 location.getLocationName(),
                 location.getLocationDescription(),
-                location.getLocationStreet(),
-                location.getLocationCity(),
-                location.getLocationZipCode(),
+                location.getStreet(),
+                location.getCity(),
+                location.getState(),
+                location.getZipCode(),
                 location.getLocationLat(),
                 location.getLocationLong(),
                 location.getLocationId());
@@ -95,10 +95,10 @@ public class LocationDaoDBImpl implements LocationDao{
             location.setLocationId(rs.getInt("locationId"));
             location.setLocationName(rs.getString("locationName"));
             location.setLocationDescription(rs.getString("locationDescription"));
-            location.setLocationStreet(rs.getString("street"));
-            location.setLocationCity(rs.getString("city"));
-            location.setLocationState(rs.getString("state"));
-            location.setLocationZipCode(rs.getString("zipCode"));
+            location.setStreet(rs.getString("street"));
+            location.setCity(rs.getString("city"));
+            location.setState(rs.getString("state"));
+            location.setZipCode(rs.getString("zipCode"));
             location.setLocationLat(rs.getString("locationLat"));
             location.setLocationLong(rs.getString("locationLong"));
 

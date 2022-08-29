@@ -7,24 +7,24 @@ public class Location {
     private int locationId;
     private String locationName;
     private String locationDescription;
-    private String locationStreet;
-    private String locationCity;
-    private String locationState;
-    private String locationZipCode;
+    private String street;
+    private String city;
+    private String state;
+    private String zipCode;
     private String locationLong;
     private String locationLat;
 
     public Location() {
     }
 
-    public Location(String locationName, String locationDescription, String locationStreet, String locationCity, String locationState,
-                    String locationZipCode, String locationLong, String locationLat) {
+    public Location(String locationName, String locationDescription, String street, String city,
+                    String state, String zipCode, String locationLong, String locationLat) {
         this.locationName = locationName;
         this.locationDescription = locationDescription;
-        this.locationStreet = locationStreet;
-        this.locationCity = locationCity;
-        this.locationState = locationState;
-        this.locationZipCode = locationZipCode;
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
         this.locationLong = locationLong;
         this.locationLat = locationLat;
     }
@@ -45,36 +45,44 @@ public class Location {
         this.locationName = locationName;
     }
 
-    public String getLocationStreet() {
-        return locationStreet;
+    public String getLocationDescription() {
+        return locationDescription;
     }
 
-    public void setLocationStreet(String locationStreet) {
-        this.locationStreet = locationStreet;
+    public void setLocationDescription(String locationDescription) {
+        this.locationDescription = locationDescription;
     }
 
-    public String getLocationCity() {
-        return locationCity;
+    public String getStreet() {
+        return street;
     }
 
-    public void setLocationCity(String locationCity) {
-        this.locationCity = locationCity;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
-    public String getLocationState() {
-        return locationState;
+    public String getCity() {
+        return city;
     }
 
-    public void setLocationState(String locationState) {
-        this.locationState = locationState;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public String getLocationZipCode() {
-        return locationZipCode;
+    public String getState() {
+        return state;
     }
 
-    public void setLocationZipCode(String locationZipCode) {
-        this.locationZipCode = locationZipCode;
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
     public String getLocationLong() {
@@ -93,25 +101,17 @@ public class Location {
         this.locationLat = locationLat;
     }
 
-    public String getLocationDescription() {
-        return locationDescription;
-    }
-
-    public void setLocationDescription(String locationDescription) {
-        this.locationDescription = locationDescription;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Location location = (Location) o;
-        return locationId == location.locationId && Objects.equals(locationName, location.locationName) && Objects.equals(locationDescription, location.locationDescription) && Objects.equals(locationStreet, location.locationStreet) && Objects.equals(locationCity, location.locationCity) && Objects.equals(locationState, location.locationState) && Objects.equals(locationZipCode, location.locationZipCode) && Objects.equals(locationLong, location.locationLong) && Objects.equals(locationLat, location.locationLat);
+        return locationId == location.locationId && Objects.equals(locationName, location.locationName) && Objects.equals(locationDescription, location.locationDescription) && Objects.equals(street, location.street) && Objects.equals(city, location.city) && Objects.equals(state, location.state) && Objects.equals(zipCode, location.zipCode) && Objects.equals(locationLong, location.locationLong) && Objects.equals(locationLat, location.locationLat);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(locationId, locationName, locationDescription, locationStreet, locationCity, locationState, locationZipCode, locationLong, locationLat);
+        return Objects.hash(locationId, locationName, locationDescription, street, city, state, zipCode, locationLong, locationLat);
     }
 
     @Override
@@ -120,10 +120,10 @@ public class Location {
                 "locationId=" + locationId +
                 ", locationName='" + locationName + '\'' +
                 ", locationDescription='" + locationDescription + '\'' +
-                ", locationStreet='" + locationStreet + '\'' +
-                ", locationCity='" + locationCity + '\'' +
-                ", locationState='" + locationState + '\'' +
-                ", locationZipCode='" + locationZipCode + '\'' +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipCode='" + zipCode + '\'' +
                 ", locationLong='" + locationLong + '\'' +
                 ", locationLat='" + locationLat + '\'' +
                 '}';
