@@ -1,20 +1,18 @@
 package com.sg.superheroSightings.dto;
 
-import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 public class Sighting {
     private int sightingId;
     private Date sightingDate;
     private Location location;
-    private Hero hero;
+    private Super hero;
 
     public Sighting() {
     }
 
-    public Sighting(Date sightingDate, Location location, Hero hero) {
+    public Sighting(Date sightingDate, Location location, Super hero) {
         this.sightingDate = sightingDate;
         this.location = location;
         this.hero = hero;
@@ -44,11 +42,11 @@ public class Sighting {
         this.location = location;
     }
 
-    public Hero getHero() {
+    public Super getHero() {
         return hero;
     }
 
-    public void setHero(Hero hero) {
+    public void setHero(Super hero) {
         this.hero = hero;
     }
 

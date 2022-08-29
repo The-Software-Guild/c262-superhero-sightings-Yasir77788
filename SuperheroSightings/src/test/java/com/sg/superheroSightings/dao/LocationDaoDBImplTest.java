@@ -1,6 +1,5 @@
 package com.sg.superheroSightings.dao;
 
-import com.sg.superheroSightings.dto.Hero;
 import com.sg.superheroSightings.dto.Location;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;

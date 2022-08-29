@@ -14,7 +14,7 @@ public class Organization {
     private String orgEmail;
     //private int locationId;
     private Location location;
-    private List<Hero> members;
+    private List<Super> members;
 
 
     public Organization() {
@@ -85,11 +85,11 @@ public class Organization {
         this.location = location;
     }
 
-    public List<Hero> getMembers() {
+    public List<Super> getMembers() {
         return members;
     }
 
-    public void setMembers(List<Hero> members) {
+    public void setMembers(List<Super> members) {
         this.members = members;
     }
 

@@ -1,6 +1,6 @@
 package com.sg.superheroSightings.dao;
 
-import com.sg.superheroSightings.dto.Hero;
+import com.sg.superheroSightings.dto.Super;
 import com.sg.superheroSightings.dto.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -67,10 +67,10 @@ public class OrganizationDaoDBImpl implements OrganizationDao{
 
 
     // helper method - for join operation
-    private List<Hero> getMembersForAnOrg(int orgId) {
+    private List<Super> getMembersForAnOrg(int orgId) {
         final String SELECT_MEM_FOR_ORG = "SELECT her.* FROM Hero her JOIN hero_org_bridge"
                 + " hob ON hob.heroId = her.heroID WHERE hob.orgId=?";
-        return jdbc.query(SELECT_MEM_FOR_ORG, new HeroDaoDBImpl.HeroMapper(), orgId);
+        return jdbc.query(SELECT_MEM_FOR_ORG, new SuperDaoDBImpl.SuperMapper(), orgId);
     }
 
 
@@ -96,9 +96,9 @@ public class OrganizationDaoDBImpl implements OrganizationDao{
     private void insertHeroOrg(Organization org) {
         final String INSERT_HERO_ORG_BRIDGE = "INSERT INTO "
                 + "hero_org_bridge(heroId, orgId) VALUES(?,?)";
-        for(Hero hero: org.getMembers()) {
+        for(Super hero: org.getMembers()) {
             jdbc.update(INSERT_HERO_ORG_BRIDGE,
-                    hero.getHeroId(),
+                    hero.getSuperId(),
                     org.getOrgId());
         }
     }

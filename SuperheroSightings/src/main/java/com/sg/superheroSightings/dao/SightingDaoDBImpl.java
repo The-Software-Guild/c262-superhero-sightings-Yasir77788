@@ -1,6 +1,6 @@
 package com.sg.superheroSightings.dao;
 
-import com.sg.superheroSightings.dto.Hero;
+import com.sg.superheroSightings.dto.Super;
 import com.sg.superheroSightings.dto.Location;
 import com.sg.superheroSightings.dto.Sighting;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class SightingDaoDBImpl implements SightingDao{
     LocationDao locationDao;
 
     @Autowired
-    HeroDao heroDao;
+    SuperDao heroDao;
 
     @Override
     public List<Sighting> getAllSightings() {
@@ -41,10 +41,10 @@ public class SightingDaoDBImpl implements SightingDao{
         }
     }
 
-    private Hero getHeroForSighting(int sightingId) {
+    private Super getHeroForSighting(int sightingId) {
         final String SELECT_HERO_FOR_SIGHTING = "SELECT h.* FROM Hero h "
                 + "JOIN Sighting s ON s.heroId = h.heroId WHERE s.sightingId = ?";
-        return jdbc.queryForObject(SELECT_HERO_FOR_SIGHTING, new HeroDaoDBImpl.HeroMapper(), sightingId);
+        return jdbc.queryForObject(SELECT_HERO_FOR_SIGHTING, new SuperDaoDBImpl.SuperMapper(), sightingId);
     }
 
     private Location getLocationForSighting(int sightingId) {
@@ -60,7 +60,7 @@ public class SightingDaoDBImpl implements SightingDao{
                 + "VALUES(?,?,?)";
         jdbc.update(INSERT_SIGHTING,
                 sighting.getSightingDate(),
-                sighting.getHero().getHeroId(),
+                sighting.getHero().getSuperId(),
                 sighting.getLocation().getLocationId());
 
         int newID = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
@@ -88,7 +88,7 @@ public class SightingDaoDBImpl implements SightingDao{
                 + "locationId=? WHERE sightingId=?";
         jdbc.update(UPDATE_SIGHTING,
                 sighting.getSightingDate(),
-                sighting.getHero().getHeroId(),
+                sighting.getHero().getSuperId(),
                 sighting.getLocation().getLocationId(),
                 sighting.getSightingId());
     }
@@ -112,7 +112,7 @@ public class SightingDaoDBImpl implements SightingDao{
             sighting.setSightingId(rs.getInt("sightingID"));
             sighting.setSightingDate(rs.getDate("sightingDate"));
             sighting.setLocation(locationDao.getLocationById(locationId));
-            sighting.setHero(heroDao.getHeroById(heroID));
+            sighting.setHero(heroDao.getSuperById(heroID));
 
             return sighting;
         }

@@ -1,7 +1,6 @@
 package com.sg.superheroSightings.dao;
 
 import com.sg.superheroSightings.dto.Location;
-import com.sg.superheroSightings.dto.Hero;
 
 import java.util.List;
 

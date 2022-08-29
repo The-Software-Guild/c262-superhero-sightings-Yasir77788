@@ -3,10 +3,10 @@ CREATE DATABASE superHeroSightingsDB;
 
 USE superHeroSightingsDB;
 
-CREATE TABLE  Hero(
-    heroId INT PRIMARY KEY AUTO_INCREMENT,
-    heroName VARCHAR (25) NOT NULL,
-    heroDescription VARCHAR(100) NOT NULL,
+CREATE TABLE  Super(
+    superId INT PRIMARY KEY AUTO_INCREMENT,
+    superName VARCHAR (25) NOT NULL,
+    superDescription VARCHAR(100) NOT NULL,
     superPower VARCHAR(25) NOT NULL,
     isHero Boolean NOT NULL
 );
@@ -36,12 +36,12 @@ CREATE TABLE Organization (
     FOREIGN KEY fk_location_org(locationId) REFERENCES Location(locationId)
 );
 
-CREATE TABLE Hero_Org_Bridge (
-    heroId INT NOT NULL,
+CREATE TABLE Super_Org_Bridge (
+    superId INT NOT NULL,
     orgId INT NOT NULL,
 
-    primary key (heroId, orgId),
-    FOREIGN KEY fk_hero_ref (HeroId) REFERENCES Hero(heroId),
+    primary key (superId, orgId),
+    FOREIGN KEY fk_super_ref (superId) REFERENCES Super(superId),
     FOREIGN KEY fk_org_ref (orgId) REFERENCES Organization(orgId)
 
 );
@@ -51,9 +51,9 @@ CREATE TABLE Sighting (
     sightingId INT PRIMARY KEY AUTO_INCREMENT,
     sightingDate DATE NOT NULL,
 
-    heroId INT NOT NULL,
+    superId INT NOT NULL,
     locationId INT NOT NULL,
 
     FOREIGN KEY fk_sight_Location(locationId) REFERENCES Location(locationId),
-    FOREIGN KEY fk_sight_Hero(heroId) REFERENCES Hero(heroId)
+    FOREIGN KEY fk_sight_super(superId) REFERENCES Super(superId)
 );

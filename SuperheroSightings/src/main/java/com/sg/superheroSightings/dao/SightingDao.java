@@ -1,10 +1,7 @@
 package com.sg.superheroSightings.dao;
 
-import com.sg.superheroSightings.dto.Location;
 import com.sg.superheroSightings.dto.Sighting;
-import com.sg.superheroSightings.dto.Hero;
 
-import java.util.Date;
 import java.util.List;
 
 public interface SightingDao {
