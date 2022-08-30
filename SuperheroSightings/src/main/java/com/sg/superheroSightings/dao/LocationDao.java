@@ -15,6 +15,6 @@ public interface LocationDao {
       void updateLocation(Location location);
 
       void deleteLocationById(int locationID);
-//
+
 //    List<Location> getLocationsForHeroSighting(Hero hero);
 }

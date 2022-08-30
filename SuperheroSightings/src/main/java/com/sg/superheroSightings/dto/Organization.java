@@ -98,12 +98,18 @@ public class Organization {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Organization that = (Organization) o;
-        return orgId == that.orgId && isHeroOrganization == that.isHeroOrganization && Objects.equals(orgName, that.orgName) && Objects.equals(orgDescription, that.orgDescription) && Objects.equals(orgPhone, that.orgPhone) && Objects.equals(orgEmail, that.orgEmail) && Objects.equals(location, that.location);
+        return orgId == that.orgId && isHeroOrganization == that.isHeroOrganization &&
+                Objects.equals(orgName, that.orgName) &&
+                Objects.equals(orgDescription, that.orgDescription) &&
+                Objects.equals(orgPhone, that.orgPhone) &&
+                Objects.equals(orgEmail, that.orgEmail) &&
+                Objects.equals(location, that.location) &&
+                Objects.equals(members, that.members);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orgId, orgName, orgDescription, isHeroOrganization, orgPhone, orgEmail, location);
+        return Objects.hash(orgId, orgName, orgDescription, isHeroOrganization, orgPhone, orgEmail, location, members);
     }
 
     @Override
@@ -116,6 +122,7 @@ public class Organization {
                 ", orgPhone='" + orgPhone + '\'' +
                 ", orgEmail='" + orgEmail + '\'' +
                 ", location=" + location +
+                ", members=" + members +
                 '}';
     }
 }

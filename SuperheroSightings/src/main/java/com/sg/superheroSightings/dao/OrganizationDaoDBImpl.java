@@ -1,5 +1,6 @@
 package com.sg.superheroSightings.dao;
 
+import com.sg.superheroSightings.dto.Location;
 import com.sg.superheroSightings.dto.Super;
 import com.sg.superheroSightings.dto.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +24,11 @@ public class OrganizationDaoDBImpl implements OrganizationDao{
     LocationDao locationDao;
 
     @Override
-    public List<Organization> getAllOrganizations() {
-        final String GET_ALL_ORGS = "SELECT * FROM Organization";
-        return jdbc.query(GET_ALL_ORGS, new OrganizationMapper());
-    }
-
-    @Override
     public Organization getOrganizationById(int orgId) {
         try {
             final String SELECT_ORG_BY_ID = "SELECT * FROM Organization WHERE orgId = ?";
             Organization org = jdbc.queryForObject(SELECT_ORG_BY_ID, new OrganizationMapper(), orgId);
+            org.setLocation(getLocationForAnOrg(orgId));
             org.setMembers(getMembersForAnOrg(orgId));
             return org;
         } catch (DataAccessException ex) {
@@ -40,11 +36,25 @@ public class OrganizationDaoDBImpl implements OrganizationDao{
         }
     }
 
+    private Location getLocationForAnOrg(int orgId){
+        final String SELECT_Location_FOR_ORG = "SELECT l.* FROM Location l "
+                + "JOIN Organization o ON o.locationId = l.locationId WHERE o.orgId = ?";
+        return jdbc.queryForObject(SELECT_Location_FOR_ORG, new LocationDaoDBImpl.LocationMapper(), orgId);
+
+    }
+
+    private List<Super> getMembersForAnOrg(int orgId) {
+        final String SELECT_MEM_FOR_ORG = "SELECT s.* FROM Super s JOIN Super_Org_bridge"
+                + " sob ON sob.superId = s.superId WHERE sob.orgId=?";
+        return jdbc.query(SELECT_MEM_FOR_ORG, new SuperDaoDBImpl.SuperMapper(), orgId);
+    }
+
+
     @Override
     @Transactional
     public Organization addOrganization(Organization org) {
         final String INSERT_ORG = "INSERT INTO Organization(orgName, orgDescription, orgPhone, "
-                + "orgEmail, isHeroOrganization, locationId) VALUES(?,?,?,?,?,?)";
+                + "orgEmail, isHeroOrg, locationId) VALUES(?,?,?,?,?,?)";
         jdbc.update(INSERT_ORG,
                 org.getOrgName(),
                 org.getOrgDescription(),
@@ -53,24 +63,16 @@ public class OrganizationDaoDBImpl implements OrganizationDao{
                 org.isHeroOrganization(),
                 org.getLocation().getLocationId());
 
-        int newID = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
-        org.setOrgId(newID);
-        insertHeroOrg (org);
+        int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
+        org.setOrgId(newId);
+        insertOrgSuper(org);
         return org;
     }
-    // helper method => for join operation
-//    private List<Hero> getMembersForOrg(int orgId) {
-//        final String SELECT_MEM_FOR_ORG = "SELECT her.* FROM Hero her JOIN hero_org_bridge"
-//                + " hob ON hob.heroId = her.heroId WHERE hob.orgId=?";
-//        return jdbc.query(SELECT_MEM_FOR_ORG, new HeroDaoDBImpl.HeroMapper(), orgId);
-//    }
 
-
-    // helper method - for join operation
-    private List<Super> getMembersForAnOrg(int orgId) {
-        final String SELECT_MEM_FOR_ORG = "SELECT her.* FROM Hero her JOIN hero_org_bridge"
-                + " hob ON hob.heroId = her.heroID WHERE hob.orgId=?";
-        return jdbc.query(SELECT_MEM_FOR_ORG, new SuperDaoDBImpl.SuperMapper(), orgId);
+    @Override
+    public List<Organization> getAllOrganizations() {
+        final String GET_ALL_ORGS = "SELECT * FROM Organization";
+        return jdbc.query(GET_ALL_ORGS, new OrganizationMapper());
     }
 
 
@@ -87,29 +89,62 @@ public class OrganizationDaoDBImpl implements OrganizationDao{
                 org.isHeroOrganization(),
                 org.getLocation().getLocationId(),
                 org.getOrgId());
-        final String DELETE_HERO_ORG_BRIDGE = "DELETE FROM Hero_Org_Bridge WHERE orgId=?";
-        jdbc.update(DELETE_HERO_ORG_BRIDGE, org.getOrgId());
-        insertHeroOrg (org);
+        final String DELETE_SUPER_ORG_BRIDGE = "DELETE FROM Super_Org_Bridge WHERE orgId=?";
+        jdbc.update(DELETE_SUPER_ORG_BRIDGE, org.getOrgId());
+        insertOrgSuper(org);
     }
 
     // helper method
-    private void insertHeroOrg(Organization org) {
-        final String INSERT_HERO_ORG_BRIDGE = "INSERT INTO "
-                + "hero_org_bridge(heroId, orgId) VALUES(?,?)";
-        for(Super hero: org.getMembers()) {
-            jdbc.update(INSERT_HERO_ORG_BRIDGE,
-                    hero.getSuperId(),
+    private void insertOrgSuper(Organization org) {
+        final String INSERT_SUPER_ORG_BRIDGE = "INSERT INTO "
+                + "Super_Org_Bridge(superId, orgId) VALUES(?,?)";
+        for(Super sp: org.getMembers()) {
+            jdbc.update(INSERT_SUPER_ORG_BRIDGE,
+                    sp.getSuperId(),
                     org.getOrgId());
         }
     }
 
     @Override
     public void deleteOrganizationById(int orgId) {
-        final String DELETE_ORG_FROM_HEOR_ORG_BRIDGE = "DELETE FROM Hero_Org_Bridge WHERE orgId=?";
-        jdbc.update(DELETE_ORG_FROM_HEOR_ORG_BRIDGE, orgId);
+        final String DELETE_ORG_FROM_SUPER_ORG_BRIDGE = "DELETE FROM Super_Org_Bridge WHERE orgId=?";
+        jdbc.update(DELETE_ORG_FROM_SUPER_ORG_BRIDGE, orgId);
 
         final String DELETE_ORG = "DELETE FROM Organization WHERE orgId = ?";
         jdbc.update(DELETE_ORG, orgId);
+    }
+
+    @Override
+    public List<Organization> getOrgsForSuper(Super super1) {
+
+        final String SELECT_ORGS_FOR_SUPER = "SELECT o.* FROM Organization o JOIN "
+                + "Super_Org_Bridge sb ON sb.orgId = o.orgId WHERE sb.superId = ?";
+        List<Organization> orgList = jdbc.query(SELECT_ORGS_FOR_SUPER,
+                new OrganizationMapper(), super1.getSuperId());
+        associateLocationAndSupers(orgList);
+        return orgList;
+    }
+
+    private void associateLocationAndSupers(List<Organization> orgList) {
+
+        for (Organization org : orgList) {
+            org.setLocation(getLocationForOrg(org.getOrgId()));
+            org.setMembers(getSupersForOrg(org.getOrgId()));
+        }
+    }
+
+    private List<Super> getSupersForOrg(int orgId) {
+
+        final String SELECT_SUPERS_FOR_ORG = "SELECT s.* FROM Super s "
+                + "JOIN super_org_bridge sb ON sb.superId = s.superId WHERE sb.orgId = ?";
+        return jdbc.query(SELECT_SUPERS_FOR_ORG, new SuperDaoDBImpl.SuperMapper(), orgId);
+    }
+
+    private Location getLocationForOrg(int orgId) {
+        final String SELECT_LOCATION_FOR_ORG = "SELECT l.* FROM location l "
+                + "JOIN Organization o ON o.locationId = l.locationId WHERE o.orgId = ?";
+        return jdbc.queryForObject(SELECT_LOCATION_FOR_ORG, new LocationDaoDBImpl.LocationMapper(), orgId);
+        
     }
 
 
