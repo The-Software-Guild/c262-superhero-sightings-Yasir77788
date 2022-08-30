@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -24,27 +25,27 @@ public class SightingDaoDBImpl implements SightingDao{
     LocationDao locationDao;
 
     @Autowired
-    SuperDao heroDao;
+    SuperDao superDao;
 
     @Override
     public List<Sighting> getAllSightings() {
         final String SELECT_ALL_SIGHTINGS = "SELECT * FROM Sighting";
         List<Sighting> sightings = jdbc.query(SELECT_ALL_SIGHTINGS, new SightingMapper());
-        associateHeroesAndLocations(sightings);
+        associateSuperAndLocations(sightings);
         return sightings;
     }
 
-    private void associateHeroesAndLocations(List<Sighting> sightings) {
+    private void associateSuperAndLocations(List<Sighting> sightings) {
         for (Sighting sighting : sightings) {
-            sighting.setHero(getHeroForSighting(sighting.getSightingId()));
+            sighting.setSuperObj(getSuperForSighting(sighting.getSightingId()));
             sighting.setLocation(getLocationForSighting(sighting.getSightingId()));
         }
     }
 
-    private Super getHeroForSighting(int sightingId) {
-        final String SELECT_HERO_FOR_SIGHTING = "SELECT h.* FROM Hero h "
-                + "JOIN Sighting s ON s.heroId = h.heroId WHERE s.sightingId = ?";
-        return jdbc.queryForObject(SELECT_HERO_FOR_SIGHTING, new SuperDaoDBImpl.SuperMapper(), sightingId);
+    private Super getSuperForSighting(int sightingId) {
+        final String SELECT_SUPER_FOR_SIGHTING = "SELECT sp.* FROM Super sp "
+                + "JOIN Sighting si ON si.superId = sp.superId WHERE si.sightingId = ?";
+        return jdbc.queryForObject(SELECT_SUPER_FOR_SIGHTING, new SuperDaoDBImpl.SuperMapper(), sightingId);
     }
 
     private Location getLocationForSighting(int sightingId) {
@@ -56,15 +57,15 @@ public class SightingDaoDBImpl implements SightingDao{
     @Override
     @Transactional
     public Sighting addSighting(Sighting sighting) {
-        final String INSERT_SIGHTING = "INSERT INTO Sighting(sightingDate, heroId, locationId) "
+        final String INSERT_SIGHTING = "INSERT INTO Sighting(sightingDate, superId, locationId) "
                 + "VALUES(?,?,?)";
         jdbc.update(INSERT_SIGHTING,
                 sighting.getSightingDate(),
-                sighting.getHero().getSuperId(),
+                sighting.getSuperObj().getSuperId(),
                 sighting.getLocation().getLocationId());
 
-        int newID = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
-        sighting.setSightingId(newID);
+        int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
+        sighting.setSightingId(newId);
         return sighting;
     }
 
@@ -73,7 +74,7 @@ public class SightingDaoDBImpl implements SightingDao{
         try {
             final String SELECT_SIGHTING_BY_ID = "SELECT * FROM Sighting WHERE sightingId=?";
             Sighting sighting = jdbc.queryForObject(SELECT_SIGHTING_BY_ID, new SightingMapper(), sightingId);
-            sighting.setHero(getHeroForSighting(sightingId));
+            sighting.setSuperObj(getSuperForSighting(sightingId));
             sighting.setLocation(getLocationForSighting(sightingId));
             return sighting;
         } catch (DataAccessException ex) {
@@ -84,11 +85,11 @@ public class SightingDaoDBImpl implements SightingDao{
     @Override
     @Transactional
     public void updateSighting(Sighting sighting) {
-        final String UPDATE_SIGHTING = "UPDATE Sighting SET sightingDate=?, heroId=?, "
+        final String UPDATE_SIGHTING = "UPDATE Sighting SET sighingDate=?, sightingId=?, "
                 + "locationId=? WHERE sightingId=?";
         jdbc.update(UPDATE_SIGHTING,
                 sighting.getSightingDate(),
-                sighting.getHero().getSuperId(),
+                sighting.getSuperObj().getSuperId(),
                 sighting.getLocation().getLocationId(),
                 sighting.getSightingId());
     }
@@ -107,16 +108,14 @@ public class SightingDaoDBImpl implements SightingDao{
         public Sighting mapRow(ResultSet rs, int index) throws SQLException {
             Sighting sighting = new Sighting();
             int locationId = rs.getInt("locationId");
-            int heroID = rs.getInt("heroId");
+            int superId = rs.getInt("superId");
 
-            sighting.setSightingId(rs.getInt("sightingID"));
+            sighting.setSightingId(rs.getInt("sightingId"));
             sighting.setSightingDate(rs.getDate("sightingDate"));
             sighting.setLocation(locationDao.getLocationById(locationId));
-            sighting.setHero(heroDao.getSuperById(heroID));
+            sighting.setSuperObj(superDao.getSuperById(superId));
 
             return sighting;
         }
     }
-
-
 }

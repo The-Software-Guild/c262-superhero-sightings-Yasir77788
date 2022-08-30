@@ -1,21 +1,24 @@
 package com.sg.superheroSightings.dto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
 public class Sighting {
     private int sightingId;
     private Date sightingDate;
+    //private LocalDateTime sightingDate;
+
     private Location location;
-    private Super hero;
+    private Super superObj;
 
     public Sighting() {
     }
 
-    public Sighting(Date sightingDate, Location location, Super hero) {
+    public Sighting(Date sightingDate, Location location, Super superObj) {
         this.sightingDate = sightingDate;
         this.location = location;
-        this.hero = hero;
+        this.superObj = superObj;
     }
 
     public int getSightingId() {
@@ -42,12 +45,12 @@ public class Sighting {
         this.location = location;
     }
 
-    public Super getHero() {
-        return hero;
+    public Super getSuperObj() {
+        return superObj;
     }
 
-    public void setHero(Super hero) {
-        this.hero = hero;
+    public void setSuperObj(Super superObj) {
+        this.superObj = superObj;
     }
 
     @Override
@@ -55,12 +58,12 @@ public class Sighting {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Sighting sighting = (Sighting) o;
-        return sightingId == sighting.sightingId && Objects.equals(sightingDate, sighting.sightingDate) && Objects.equals(location, sighting.location) && Objects.equals(hero, sighting.hero);
+        return sightingId == sighting.sightingId && Objects.equals(sightingDate, sighting.sightingDate) && Objects.equals(location, sighting.location) && Objects.equals(superObj, sighting.superObj);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sightingId, sightingDate, location, hero);
+        return Objects.hash(sightingId, sightingDate, location, superObj);
     }
 
     @Override
@@ -69,7 +72,7 @@ public class Sighting {
                 "sightingId=" + sightingId +
                 ", sightingDate=" + sightingDate +
                 ", location=" + location +
-                ", hero=" + hero +
+                ", superObj=" + superObj +
                 '}';
     }
 }

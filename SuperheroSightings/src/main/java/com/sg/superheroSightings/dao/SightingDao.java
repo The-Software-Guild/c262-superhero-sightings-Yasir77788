@@ -16,7 +16,7 @@ public interface SightingDao {
 
      void deleteSightingById(int sightingId);
 
-//    List<Sighting> getSightingForHero(Hero hero);
+//    List<Sighting> getSightingForSuper(Super s);
 //
 //    List<Sighting> getSightingForDate(Date date);
 //

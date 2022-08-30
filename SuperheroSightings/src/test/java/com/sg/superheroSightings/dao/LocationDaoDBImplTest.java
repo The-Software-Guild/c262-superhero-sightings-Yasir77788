@@ -30,10 +30,14 @@ public class LocationDaoDBImplTest {
     // clear out the test-DB before each test-method run
     @BeforeEach
     public void setUp() {
+
+
         List<Location> locationList = locationDao.getAllLocations();
         for(Location loc : locationList) {
             locationDao.deleteLocationById(loc.getLocationId());
         }
+
+
     }
 
     @AfterEach
