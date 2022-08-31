@@ -101,6 +101,22 @@ public class SightingDaoDBImpl implements SightingDao{
         jdbc.update(DELETE_SIGHTING, sightingId);
     }
 
+    @Override
+    public List<Sighting> getSightingForSuper(Super sp) {
+        final String SELECT_SIGHTINGS_FOR_SUPER = "SELECT * FROM Sighting WHERE superId=?";
+        List<Sighting> sightings = jdbc.query(SELECT_SIGHTINGS_FOR_SUPER, new SightingMapper(), sp.getSuperId());
+        associateSuperAndLocations(sightings);
+        return sightings;
+    }
+
+    @Override
+    public List<Sighting> getSightingsForLocation(Location location) {
+        final String SELECT_SIGHTINGS_FOR_LOC = "SELECT * FROM Sighting WHERE locationId=?";
+        List<Sighting> sightings = jdbc.query(SELECT_SIGHTINGS_FOR_LOC, new SightingMapper(), location.getLocationId());
+        associateSuperAndLocations(sightings);
+        return sightings;
+    }
+
 
     public final class SightingMapper implements RowMapper<Sighting> {
 

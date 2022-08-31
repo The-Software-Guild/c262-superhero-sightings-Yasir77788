@@ -1,6 +1,8 @@
 package com.sg.superheroSightings.dao;
 
+import com.sg.superheroSightings.dto.Location;
 import com.sg.superheroSightings.dto.Sighting;
+import com.sg.superheroSightings.dto.Super;
 
 import java.util.List;
 
@@ -16,9 +18,11 @@ public interface SightingDao {
 
      void deleteSightingById(int sightingId);
 
-//    List<Sighting> getSightingForSuper(Super s);
-//
+     List<Sighting> getSightingForSuper(Super sp);
+
+      List<Sighting> getSightingsForLocation(Location location);
+
 //    List<Sighting> getSightingForDate(Date date);
-//
+
 //    List<Sighting> getSightingsForLocationAndDate(Location location, Date date);
 }

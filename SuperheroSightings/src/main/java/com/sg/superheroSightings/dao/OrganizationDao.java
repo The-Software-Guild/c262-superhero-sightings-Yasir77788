@@ -19,11 +19,6 @@ public interface OrganizationDao {
 
         List<Organization> getOrgsForSuper(Super sp);
 
-        //List<Organization> getOrgsForLocation(Location location);
-
-
-
-
 
 
 }
