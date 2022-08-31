@@ -32,64 +32,77 @@ public class LocationController {
     @GetMapping("locations")
     public String displayLocations(Model model) {
         List<Location> locations = locationDao.getAllLocations();
-        model.addAttribute("supers", locations);
+        model.addAttribute("locations", locations);
         return "locations";
     }
 
 
-//    @PostMapping("addSuper")
-//    public String addSuper(HttpServletRequest request) {
-//        String superName = request.getParameter("superName");
-//        String superDescription = request.getParameter("superDescription");
-//        String superPower = request.getParameter("superPower");
-//        String superStatus = request.getParameter("superStatus");
-//
-//        Super sp = new Super();
-//        sp.setSuperName(superName);
-//        sp.setSuperDescription(superDescription);
-//        sp.setSuperPower(superPower);
-//        sp.setSuperStatus(superStatus);
-//
-//        superDao.addSuper(sp);
-//
-//        return "redirect:/supers";
-//    }
-//
-//
-//    @GetMapping("deleteSuper")
-//    public String deleteSuper(HttpServletRequest request) {
-//        int id = Integer.parseInt(request.getParameter("id"));
-//        superDao.deleteSuperById(id);
-//
-//        return "redirect:/supers";
-//    }
-//
-//    @GetMapping("editSuper")
-//    public String editSuper(HttpServletRequest request, Model model) {
-//        int id = Integer.parseInt(request.getParameter("id"));
-//        Super superObj = superDao.getSuperById(id);
-//
-//        model.addAttribute("super", superObj);
-//        return "editSuper";
-//    }
-//
-//    @PostMapping("editSuper")
-//    public String performEditSuper(HttpServletRequest request) {
-//        int id = Integer.parseInt(request.getParameter("id"));
-//        Super superObj = superDao.getSuperById(id);
-//
-//        superObj.setSuperName(request.getParameter("superName"));
-//        superObj.setSuperDescription(request.getParameter("superDescription"));
-//        superObj.setSuperPower(request.getParameter("superPower"));
-//        superObj.setSuperStatus(request.getParameter("superStatus"));
-//
-//        superDao.updateSuper(superObj);
-//
-//        return "redirect:/supers";
-//    }
-//
-//
-//
-//
+    @PostMapping("addLocation")
+    public String addSuper(HttpServletRequest request) {
+        String locationName = request.getParameter("locationName");
+        String locationDescription = request.getParameter("locationDescription");
+        String street = request.getParameter("street");
+        String city = request.getParameter("city");
+        String state = request.getParameter("state");
+        String zipCode = request.getParameter("zipCode");
+        String locationLat = request.getParameter("locationLat");
+        String locationLong = request.getParameter("locationLong");
+
+        Location loc = new Location();
+        loc.setLocationName(locationName);
+        loc.setLocationDescription(locationDescription);
+        loc.setStreet(street);
+        loc.setCity(city);
+        loc.setState(state);
+        loc.setZipCode(zipCode);
+        loc.setLocationLat(locationLat);
+        loc.setLocationLong(locationLong);
+
+
+        locationDao.addLocation(loc);
+
+        return "redirect:/locations";
+    }
+
+
+    @GetMapping("deleteLocation")
+    public String deleteLocation(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        locationDao.deleteLocationById(id);
+
+        return "redirect:/locations";
+    }
+
+    @GetMapping("editLocation")
+    public String editLocation(HttpServletRequest request, Model model) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Location loc = locationDao.getLocationById(id);
+
+        model.addAttribute("location", loc);
+        return "editLocation";
+    }
+
+    @PostMapping("editLocation")
+    public String performEditLocation(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Location loc = locationDao.getLocationById(id);
+
+        loc.setLocationName(request.getParameter("locationName"));
+        loc.setLocationDescription(request.getParameter("locationDescription"));
+        loc.setStreet(request.getParameter("street"));
+        loc.setCity(request.getParameter("city"));
+        loc.setState(request.getParameter("state"));
+        loc.setZipCode(request.getParameter("zipCode"));
+        loc.setLocationLat(request.getParameter("locationLat"));
+        loc.setLocationLong(request.getParameter("locationLong"));
+
+        locationDao.updateLocation(loc);
+
+        return "redirect:/locations";
+    }
+
+
+
+
 
 }
