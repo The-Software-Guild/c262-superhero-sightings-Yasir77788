@@ -49,7 +49,7 @@ CREATE TABLE Super_Org_Bridge (
 CREATE TABLE Sighting (
 
     sightingId INT PRIMARY KEY AUTO_INCREMENT,
-    sightingDate DATE NOT NULL,
+    sightingDate TIMESTAMP NOT NULL,
 
     superId INT NOT NULL,
     locationId INT NOT NULL,

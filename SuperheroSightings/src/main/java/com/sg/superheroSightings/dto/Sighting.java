@@ -1,21 +1,31 @@
 package com.sg.superheroSightings.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
 public class Sighting {
     private int sightingId;
-    private Date sightingDate;
-    //private LocalDateTime sightingDate;
 
+    @NotBlank(message = "Sighting date must not be empty.")
+    @Size(max = 50, message="Sighting date must be less than 50 characters.")
+    private LocalDate sightingDate;
+
+    @NotBlank(message = "Sighting location must not be empty.")
+    @Size(max = 50, message="Sighting date must be less than 50 characters.")
     private Location location;
+
+    @NotBlank(message = "Sighting super must not be empty.")
+    @Size(max = 50, message="Sighting super must be less than 50 characters.")
     private Super superObj;
 
     public Sighting() {
     }
 
-    public Sighting(Date sightingDate, Location location, Super superObj) {
+    public Sighting(LocalDate sightingDate, Location location, Super superObj) {
         this.sightingDate = sightingDate;
         this.location = location;
         this.superObj = superObj;
@@ -29,11 +39,11 @@ public class Sighting {
         this.sightingId = sightingId;
     }
 
-    public Date getSightingDate() {
+    public LocalDate getSightingDate() {
         return sightingDate;
     }
 
-    public void setSightingDate(Date sightingDate) {
+    public void setSightingDate(LocalDate sightingDate) {
         this.sightingDate = sightingDate;
     }
 

@@ -52,11 +52,7 @@ public class OrganizationDaoDBImplTest {
         for(Location loc : locationList) {
             locationDao.deleteLocationById(loc.getLocationId());
         }
-//
-//        List<Sighting> sightings = sightingDao.getAllSightings();
-//        for (Sighting sighting : sightings) {
-//            sightingDao.deleteSightingById(sighting.getSightingId());
-//        }
+
 
         List<Organization> orgList = orgDao.getAllOrganizations();
         for (Organization org : orgList) {

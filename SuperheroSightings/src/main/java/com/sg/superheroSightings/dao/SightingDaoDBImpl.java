@@ -83,9 +83,9 @@ public class SightingDaoDBImpl implements SightingDao{
     }
 
     @Override
-    @Transactional
+    @Transactional // sighingDate=?
     public void updateSighting(Sighting sighting) {
-        final String UPDATE_SIGHTING = "UPDATE Sighting SET sighingDate=?, sightingId=?, "
+        final String UPDATE_SIGHTING = "UPDATE Sighting SET sightingDate=?, sightingId=?, "
                 + "locationId=? WHERE sightingId=?";
         jdbc.update(UPDATE_SIGHTING,
                 sighting.getSightingDate(),
@@ -111,7 +111,8 @@ public class SightingDaoDBImpl implements SightingDao{
             int superId = rs.getInt("superId");
 
             sighting.setSightingId(rs.getInt("sightingId"));
-            sighting.setSightingDate(rs.getDate("sightingDate"));
+            Timestamp timestamp = rs.getTimestamp("sightingDate");
+            sighting.setSightingDate(timestamp.toLocalDateTime().toLocalDate());
             sighting.setLocation(locationDao.getLocationById(locationId));
             sighting.setSuperObj(superDao.getSuperById(superId));
 

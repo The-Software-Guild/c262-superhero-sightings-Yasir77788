@@ -1,19 +1,41 @@
 package com.sg.superheroSightings.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Objects;
 
 public class Organization {
-    //Organizations have names, descriptions, and address/contact information.
-    //Organizations have members.
+
+
     private int orgId;
+
+    @NotBlank(message = "Organization name must not be empty.")
+    @Size(max = 50, message="Organization name must be less than 50 characters.")
     private String orgName;
+
+    @NotBlank(message = "Organization description must not be empty.")
+    @Size(max = 200, message="Organization description must be less than 200 characters.")
     private String orgDescription;
+
+    @NotBlank(message = "Organization super-status must not be empty.")
+    @Size(max = 50, message="Organization super-status must be less than 50 characters.")
     private boolean isHeroOrganization;
+
+    @NotBlank(message = "Organization phone must not be empty.")
+    @Size(max = 50, message="Organization phone must be less than 50 characters.")
     private String orgPhone;
+
+    @NotBlank(message = "Organization email must not be empty.")
+    @Size(max = 50, message="Organization email must be less than 50 characters.")
     private String orgEmail;
-    //private int locationId;
+
+    @NotBlank(message = "Organization location must not be empty.")
+    @Size(max = 50, message="Organization location must be less than 50 characters.")
     private Location location;
+
+    @NotBlank(message = "Organization members must not be empty.")
+    @Size(max = 50, message="Organization members must be less than 50 characters.")
     private List<Super> members;
 
 

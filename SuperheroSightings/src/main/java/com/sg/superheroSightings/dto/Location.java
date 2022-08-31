@@ -1,17 +1,43 @@
 package com.sg.superheroSightings.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class Location {
-    //Locations have names, descriptions, address information, and latitude/longitude coordinates.
+
     private int locationId;
+
+    @NotBlank(message = "Location name must not be empty.")
+    @Size(max = 50, message="Location name must be less than 50 characters.")
     private String locationName;
+
+    @NotBlank(message = "Location description must not be empty.")
+    @Size(max = 200, message="Location description must be less than 200 characters.")
     private String locationDescription;
+
+    @NotBlank(message = "Location street name must not be empty.")
+    @Size(max = 50, message="Location street must be less than 50 characters.")
     private String street;
+
+    @NotBlank(message = "Location city must not be empty.")
+    @Size(max = 50, message="Location city must be less than 50 characters.")
     private String city;
+
+    @NotBlank(message = "Location city must not be empty.")
+    @Size(max = 50, message="Location city name must be less than 50 characters.")
     private String state;
+
+    @NotBlank(message = "Location zipcode must not be empty.")
+    @Size(max = 10, message="Location zipcode must be less than 10 characters.")
     private String zipCode;
+
+    @NotBlank(message = "locationLong must not be empty.")
+    @Size(max = 50, message="locationLong  must be less than 50 characters.")
     private String locationLong;
+
+    @NotBlank(message = "locationLat must not be empty.")
+    @Size(max = 50, message="locationLat  must be less than 50 characters.")
     private String locationLat;
 
     public Location() {
