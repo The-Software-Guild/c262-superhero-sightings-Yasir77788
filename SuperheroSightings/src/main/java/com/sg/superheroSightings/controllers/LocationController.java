@@ -29,11 +29,11 @@ public class LocationController {
 //    @Autowired
 //    private SightingDao sightingDao;
 
-    @GetMapping("supers")
-    public String displaySuper(Model model) {
-        List<Super> supers = superDao.getAllSupers();
-        model.addAttribute("supers", supers);
-        return "supers";
+    @GetMapping("locations")
+    public String displayLocations(Model model) {
+        List<Location> locations = locationDao.getAllLocations();
+        model.addAttribute("supers", locations);
+        return "locations";
     }
 
 
