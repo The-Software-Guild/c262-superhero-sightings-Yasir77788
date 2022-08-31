@@ -31,7 +31,7 @@ public class SuperController {
     private SightingDao sightingDao;
 
     @GetMapping("supers")
-    public String displaySuper(Model model) {
+    public String displaySuperCharacters(Model model) {
         List<Super> supers = superDao.getAllSupers();
         model.addAttribute("supers", supers);
         return "supers";
