@@ -82,7 +82,7 @@ public class OrganizationDaoDBImplTest {
         testSuper.setSuperName("Superhuman");
         testSuper.setSuperDescription("A person with good super skills");
         testSuper.setSuperPower("x-ray vision");
-        testSuper.setHero(true);
+        testSuper.setSuperStatus("Hero");
         testSuper = superDao.addSuper(testSuper);
 
         List<Super> superList = new ArrayList<>();
@@ -121,7 +121,7 @@ public class OrganizationDaoDBImplTest {
         testSuper.setSuperName("Superhuman");
         testSuper.setSuperDescription("A person with good super skills");
         testSuper.setSuperPower("x-ray vision");
-        testSuper.setHero(true);
+        testSuper.setSuperStatus("Hero");
         testSuper = superDao.addSuper(testSuper);
 
         List<Super> superList = new ArrayList<>();
@@ -163,7 +163,7 @@ public class OrganizationDaoDBImplTest {
         testSuper.setSuperName("Superhuman");
         testSuper.setSuperDescription("A person with good super skills");
         testSuper.setSuperPower("x-ray vision");
-        testSuper.setHero(true);
+        testSuper.setSuperStatus("Hero");
         testSuper = superDao.addSuper(testSuper);
 
         List<Super> superList = new ArrayList<>();
@@ -212,7 +212,7 @@ public class OrganizationDaoDBImplTest {
         testSuper.setSuperName("Superhuman");
         testSuper.setSuperDescription("A person with good super skills");
         testSuper.setSuperPower("x-ray vision");
-        testSuper.setHero(true);
+        testSuper.setSuperStatus("Hero");
         testSuper = superDao.addSuper(testSuper);
 
         List<Super> superList = new ArrayList<>();
@@ -256,14 +256,14 @@ public class OrganizationDaoDBImplTest {
         testSuper.setSuperName("Superhuman");
         testSuper.setSuperDescription("A person with good super skills");
         testSuper.setSuperPower("x-ray vision");
-        testSuper.setHero(true);
+        testSuper.setSuperStatus("Hero");
         testSuper = superDao.addSuper(testSuper);
 
         Super testSuper2 = new Super();
         testSuper2.setSuperName("Superhuman 2.0");
         testSuper2.setSuperDescription("A person2 with good super skills");
         testSuper2.setSuperPower("x-ray vision2");
-        testSuper2.setHero(true);
+        testSuper2.setSuperStatus("Hero");
         testSuper2 = superDao.addSuper(testSuper2);
 
         List<Super> superList = new ArrayList<>();

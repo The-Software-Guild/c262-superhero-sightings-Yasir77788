@@ -24,16 +24,16 @@ public class Super {
 
     @NotBlank(message = "IsHero must not be empty.")
     @Size(max = 10, message="IsHero description must be less than 10 characters.")
-    private boolean isHero;
+    private String SuperStatus;
 
     public Super() {
     }
 
-    public Super(String superName, String superDescription, String superPower, boolean isHero) {
+    public Super(String superName, String superDescription, String superPower, String superStatus) {
         this.superName = superName;
         this.superDescription = superDescription;
         this.superPower = superPower;
-        this.isHero = isHero;
+        SuperStatus = superStatus;
     }
 
     public int getSuperId() {
@@ -68,12 +68,12 @@ public class Super {
         this.superPower = superPower;
     }
 
-    public boolean isHero() {
-        return isHero;
+    public String getSuperStatus() {
+        return SuperStatus;
     }
 
-    public void setHero(boolean hero) {
-        isHero = hero;
+    public void setSuperStatus(String superStatus) {
+        SuperStatus = superStatus;
     }
 
     @Override
@@ -81,12 +81,12 @@ public class Super {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Super aSuper = (Super) o;
-        return superId == aSuper.superId && isHero == aSuper.isHero && Objects.equals(superName, aSuper.superName) && Objects.equals(superDescription, aSuper.superDescription) && Objects.equals(superPower, aSuper.superPower);
+        return superId == aSuper.superId && Objects.equals(superName, aSuper.superName) && Objects.equals(superDescription, aSuper.superDescription) && Objects.equals(superPower, aSuper.superPower) && Objects.equals(SuperStatus, aSuper.SuperStatus);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(superId, superName, superDescription, superPower, isHero);
+        return Objects.hash(superId, superName, superDescription, superPower, SuperStatus);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class Super {
                 ", superName='" + superName + '\'' +
                 ", superDescription='" + superDescription + '\'' +
                 ", superPower='" + superPower + '\'' +
-                ", isHero=" + isHero +
+                ", SuperStatus='" + SuperStatus + '\'' +
                 '}';
     }
 }

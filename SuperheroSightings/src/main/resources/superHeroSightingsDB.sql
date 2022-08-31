@@ -8,7 +8,7 @@ CREATE TABLE  Super(
     superName VARCHAR (25) NOT NULL,
     superDescription VARCHAR(100) NOT NULL,
     superPower VARCHAR(25) NOT NULL,
-    isHero Boolean NOT NULL
+    superStatus VARCHAR(20) NOT NULL
 );
 
 

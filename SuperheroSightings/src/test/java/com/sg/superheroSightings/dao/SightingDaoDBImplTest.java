@@ -80,7 +80,7 @@ public class SightingDaoDBImplTest {
         superObj.setSuperName("Test Spider-man");
         superObj.setSuperDescription("A man that is a spider");
         superObj.setSuperPower("Can climb");
-        superObj.setHero(true);
+        superObj.setSuperStatus("Hero");
         superDao.addSuper(superObj);
 
         Sighting sighting = new Sighting();
@@ -113,7 +113,7 @@ public class SightingDaoDBImplTest {
         super1.setSuperName("Test Spiderman");
         super1.setSuperDescription("A man that is a spider");
         super1.setSuperPower("Can climb high buildings");
-        super1.setHero(true);
+        super1.setSuperStatus("Hero");
         superDao.addSuper(super1);
 
         Sighting sighting1 = new Sighting();
@@ -138,7 +138,7 @@ public class SightingDaoDBImplTest {
         super2.setSuperName("Test Spiderman2");
         super2.setSuperDescription("A man that is a spider");
         super2.setSuperPower("Can climb");
-        super2.setHero(false);
+        super2.setSuperStatus("Villain");
         superDao.addSuper(super2);
 
         Sighting sighting2 = new Sighting();
@@ -173,7 +173,7 @@ public class SightingDaoDBImplTest {
         super1.setSuperName("Test Spiderman");
         super1.setSuperDescription("A man that is a spider");
         super1.setSuperPower("Can climb high buildings");
-        super1.setHero(true);
+        super1.setSuperStatus("Hero");
         superDao.addSuper(super1);
 
 
@@ -181,7 +181,7 @@ public class SightingDaoDBImplTest {
         super2.setSuperName("Test Spiderman2");
         super2.setSuperDescription("A man that is a spider");
         super2.setSuperPower("Can climb");
-        super2.setHero(false);
+        super2.setSuperStatus("Villain");
         superDao.addSuper(super2);
 
 
@@ -222,7 +222,7 @@ public class SightingDaoDBImplTest {
         super1.setSuperName("Test Spiderman");
         super1.setSuperDescription("A man that is a spider");
         super1.setSuperPower("Can climb high buildings");
-        super1.setHero(true);
+        super1.setSuperStatus("Hero");
         superDao.addSuper(super1);
 
         Sighting sighting = new Sighting();

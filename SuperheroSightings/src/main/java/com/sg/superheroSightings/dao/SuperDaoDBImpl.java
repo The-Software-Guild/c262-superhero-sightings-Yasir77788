@@ -39,13 +39,13 @@ public class SuperDaoDBImpl implements SuperDao {
     @Override
     @Transactional
     public Super addSuper(Super superObj) {
-        final String INSERT_HERO = "INSERT INTO Super(superName, superDescription, "
-                + "superPower, isHero) VALUES(?,?,?,?)";
-        jdbc.update(INSERT_HERO,
+        final String INSERT_SUPER = "INSERT INTO Super(superName, superDescription, "
+                + "superPower,superStatus) VALUES(?,?,?,?)";
+        jdbc.update(INSERT_SUPER,
                 superObj.getSuperName(),
                 superObj.getSuperDescription(),
                 superObj.getSuperPower(),
-                superObj.isHero());
+                superObj.getSuperStatus() );
 
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         superObj.setSuperId(newId);
@@ -55,12 +55,12 @@ public class SuperDaoDBImpl implements SuperDao {
     @Override
     public void updateSuper(Super superObj) {
         final String UPDATE_HERO = "UPDATE Super SET superName=?, superDescription=?, "
-                + "superPower=?, isHero=? WHERE superId=?";
+                + "superPower=?, superStatus=? WHERE superId=?";
         jdbc.update(UPDATE_HERO,
                 superObj.getSuperName(),
                 superObj.getSuperDescription(),
                 superObj.getSuperPower(),
-                superObj.isHero(),
+                superObj.getSuperStatus(),
                 superObj.getSuperId());
     }
 
@@ -98,7 +98,7 @@ public class SuperDaoDBImpl implements SuperDao {
             superObj.setSuperName(rs.getString("superName"));
             superObj.setSuperDescription(rs.getString("superDescription"));
             superObj.setSuperPower(rs.getString("superPower"));
-            superObj.setHero(rs.getBoolean("isHero"));
+            superObj.setSuperStatus(rs.getString("superStatus"));
 
             return superObj;
         }

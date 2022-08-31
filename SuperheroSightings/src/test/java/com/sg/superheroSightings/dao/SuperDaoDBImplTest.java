@@ -48,14 +48,14 @@ public class SuperDaoDBImplTest {
         testSuper.setSuperName("Superhuman");
         testSuper.setSuperDescription("A person with good super skills");
         testSuper.setSuperPower("x-ray vision");
-        testSuper.setHero(true);
+        testSuper.setSuperStatus("Hero");
         testSuper = superDao.addSuper(testSuper);
 
         Super testVillain = new Super();
         testVillain.setSuperName("The Joker");
         testVillain.setSuperDescription("A person with evil intentions");
         testVillain.setSuperPower("Lethal concoctions");
-        testVillain.setHero(false);
+        testVillain.setSuperStatus("Villain");
         testVillain = superDao.addSuper(testVillain);
 
         // ACT - call the code under test
@@ -73,7 +73,7 @@ public class SuperDaoDBImplTest {
         testSuper.setSuperName("Batman");
         testSuper.setSuperDescription("A man that can climb high buildings");
         testSuper.setSuperPower("super intellect");
-        testSuper.setHero(true);
+        testSuper.setSuperStatus("Hero");
         testSuper = superDao.addSuper(testSuper);
 
         Super heroFromDao = superDao.getSuperById(testSuper.getSuperId());
@@ -87,7 +87,7 @@ public class SuperDaoDBImplTest {
         testSuper.setSuperName("Superman 1.0");
         testSuper.setSuperDescription("A man with super skills");
         testSuper.setSuperPower("super-speed");
-        testSuper.setHero(true);
+        testSuper.setSuperStatus("Hero");
         testSuper = superDao.addSuper(testSuper);
 
         Super superFromDao = superDao.getSuperById(testSuper.getSuperId());
@@ -96,7 +96,7 @@ public class SuperDaoDBImplTest {
         testSuper.setSuperName("Superman 2.0: updated");
         testSuper.setSuperDescription("A man with super skills updated");
         testSuper.setSuperPower("super-speed: updated");
-        testSuper.setHero(true);
+        testSuper.setSuperStatus("Hero");
         superDao.updateSuper(testSuper);
 
         assertNotEquals(testSuper, superFromDao);
@@ -113,7 +113,7 @@ public class SuperDaoDBImplTest {
         superObj.setSuperName("Test Superman");
         superObj.setSuperDescription("A man who helps the vulnerable");
         superObj.setSuperPower("superhuman strength");
-        superObj.setHero(true);
+        superObj.setSuperStatus("Hero");
         superObj = superDao.addSuper(superObj);
 
         Super superFromDao = superDao.getSuperById(superObj.getSuperId());
