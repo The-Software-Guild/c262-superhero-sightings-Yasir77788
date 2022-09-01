@@ -61,13 +61,13 @@ public class SightingController {
     }
 
 
-    //    @GetMapping("courseDetail")
-//    public String courseDetail(Integer id, Model model) {
-//        Course course = courseDao.getCourseById(id);
-//        model.addAttribute("course", course);
-//        return "courseDetail";
-//    }
-//
+    @GetMapping("sightingDetail")
+    public String sightingDetail(Integer id, Model model) {
+        Sighting sighting = sightingDao.getSightingById(id);
+        model.addAttribute("sighting", sighting);
+        return "sightingDetail";
+    }
+
     @GetMapping("deleteSighting")
     public String deleteSighting(Integer id) {
         sightingDao.deleteSightingById(id);
