@@ -1,5 +1,7 @@
 package com.sg.superheroSightings.dto;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -12,14 +14,13 @@ public class Sighting {
 
     @NotBlank(message = "Sighting date must not be empty.")
     @Size(max = 50, message="Sighting date must be less than 50 characters.")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate sightingDate;
 
     @NotBlank(message = "Sighting location must not be empty.")
-    @Size(max = 50, message="Sighting date must be less than 50 characters.")
     private Location location;
 
     @NotBlank(message = "Sighting super must not be empty.")
-    @Size(max = 50, message="Sighting super must be less than 50 characters.")
     private Super superObj;
 
     public Sighting() {
