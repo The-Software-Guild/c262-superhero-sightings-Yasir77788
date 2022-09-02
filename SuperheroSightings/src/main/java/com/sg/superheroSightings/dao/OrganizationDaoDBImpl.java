@@ -54,13 +54,13 @@ public class OrganizationDaoDBImpl implements OrganizationDao{
     @Transactional
     public Organization addOrganization(Organization org) {
         final String INSERT_ORG = "INSERT INTO Organization(orgName, orgDescription, orgPhone, "
-                + "orgEmail, isHeroOrg, locationId) VALUES(?,?,?,?,?,?)";
+                + "orgEmail, heroOrVillainOrg, locationId) VALUES(?,?,?,?,?,?)";
         jdbc.update(INSERT_ORG,
                 org.getOrgName(),
                 org.getOrgDescription(),
                 org.getOrgPhone(),
                 org.getOrgEmail(),
-                org.isHeroOrganization(),
+                org.getHeroOrVillainOrg(),
                 org.getLocation().getLocationId());
 
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
@@ -80,13 +80,13 @@ public class OrganizationDaoDBImpl implements OrganizationDao{
     @Transactional
     public void updateOrganization(Organization org) {
         final String UPDATE_ORG = "UPDATE Organization SET orgName=?, orgDescription=?, orgPhone=?,"
-                + "orgEmail=?, isHeroOrg=?, locationId=? WHERE orgId=?";
+                + "orgEmail=?, heroOrVillainOrg=?, locationId=? WHERE orgId=?";
         jdbc.update(UPDATE_ORG,
                 org.getOrgName(),
                 org.getOrgDescription(),
                 org.getOrgPhone(),
                 org.getOrgEmail(),
-                org.isHeroOrganization(),
+                org.getHeroOrVillainOrg(),
                 org.getLocation().getLocationId(),
                 org.getOrgId());
         final String DELETE_SUPER_ORG_BRIDGE = "DELETE FROM Super_Org_Bridge WHERE orgId=?";
@@ -158,7 +158,7 @@ public class OrganizationDaoDBImpl implements OrganizationDao{
             org.setOrgDescription(rs.getString("orgDescription"));
             org.setOrgPhone(rs.getString("orgPhone"));
             org.setOrgEmail(rs.getString("orgEmail"));
-            org.setHeroOrganization(rs.getBoolean("isHeroOrg"));
+            org.setHeroOrVillainOrg(rs.getString("heroOrVillainOrg"));
             org.setLocation(locationDao.getLocationById(rs.getInt("locationId")));
             org.setMembers(getMembersForAnOrg(org.getOrgId()));
 
