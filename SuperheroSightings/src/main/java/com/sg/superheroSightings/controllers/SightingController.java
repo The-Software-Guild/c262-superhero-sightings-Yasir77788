@@ -87,7 +87,7 @@ public class SightingController {
     }
 
     @PostMapping("editSighting")
-    public String performEditCourse(Sighting sighting, HttpServletRequest request) {
+    public String performEditSighting(Sighting sighting, HttpServletRequest request) {
 
         String sightingDateString = request.getParameter("sightingDate");
         String locationId = request.getParameter("locationId");
