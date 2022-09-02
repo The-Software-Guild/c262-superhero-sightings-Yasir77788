@@ -30,7 +30,7 @@ CREATE TABLE Organization (
     orgDescription VARCHAR(100) NOT NULL,
     orgPhone CHAR(15),
     orgEmail VARCHAR(50),
-    isHeroOrg Boolean NOT NULL,
+    heroOrVillainOrg VARCHAR(10) NOT NULL,
     locationId INT NOT NULL,
 
     FOREIGN KEY fk_location_org(locationId) REFERENCES Location(locationId)
