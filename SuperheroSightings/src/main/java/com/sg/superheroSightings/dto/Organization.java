@@ -20,7 +20,7 @@ public class Organization {
 
     @NotBlank(message = "Organization super-status must not be empty.")
     @Size(max = 50, message="Organization super-status must be less than 50 characters.")
-    private boolean isHeroOrganization;
+    private String heroOrVillainOrg;
 
     @NotBlank(message = "Organization phone must not be empty.")
     @Size(max = 50, message="Organization phone must be less than 50 characters.")
@@ -39,16 +39,15 @@ public class Organization {
     private List<Super> members;
 
 
-    public Organization() {
-    }
-
-    public Organization(String orgName, String orgDescription, boolean isHeroOrganization, String orgPhone, String orgEmail, Location location) {
+    public Organization(String orgName, String orgDescription, String heroOrVillainOrg,
+                        String orgPhone, String orgEmail, Location location, List<Super> members) {
         this.orgName = orgName;
         this.orgDescription = orgDescription;
-        this.isHeroOrganization = isHeroOrganization;
+        this.heroOrVillainOrg = heroOrVillainOrg;
         this.orgPhone = orgPhone;
         this.orgEmail = orgEmail;
         this.location = location;
+        this.members = members;
     }
 
     public int getOrgId() {
@@ -75,12 +74,12 @@ public class Organization {
         this.orgDescription = orgDescription;
     }
 
-    public boolean isHeroOrganization() {
-        return isHeroOrganization;
+    public String getHeroOrVillainOrg() {
+        return heroOrVillainOrg;
     }
 
-    public void setHeroOrganization(boolean heroOrganization) {
-        isHeroOrganization = heroOrganization;
+    public void setHeroOrVillainOrg(String heroOrVillainOrg) {
+        this.heroOrVillainOrg = heroOrVillainOrg;
     }
 
     public String getOrgPhone() {
@@ -115,23 +114,20 @@ public class Organization {
         this.members = members;
     }
 
+    public Organization() {
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Organization that = (Organization) o;
-        return orgId == that.orgId && isHeroOrganization == that.isHeroOrganization &&
-                Objects.equals(orgName, that.orgName) &&
-                Objects.equals(orgDescription, that.orgDescription) &&
-                Objects.equals(orgPhone, that.orgPhone) &&
-                Objects.equals(orgEmail, that.orgEmail) &&
-                Objects.equals(location, that.location) &&
-                Objects.equals(members, that.members);
+        return orgId == that.orgId && Objects.equals(orgName, that.orgName) && Objects.equals(orgDescription, that.orgDescription) && Objects.equals(heroOrVillainOrg, that.heroOrVillainOrg) && Objects.equals(orgPhone, that.orgPhone) && Objects.equals(orgEmail, that.orgEmail) && Objects.equals(location, that.location) && Objects.equals(members, that.members);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orgId, orgName, orgDescription, isHeroOrganization, orgPhone, orgEmail, location, members);
+        return Objects.hash(orgId, orgName, orgDescription, heroOrVillainOrg, orgPhone, orgEmail, location, members);
     }
 
     @Override
@@ -140,7 +136,7 @@ public class Organization {
                 "orgId=" + orgId +
                 ", orgName='" + orgName + '\'' +
                 ", orgDescription='" + orgDescription + '\'' +
-                ", isHeroOrganization=" + isHeroOrganization +
+                ", HeroOrVillainOrg='" + heroOrVillainOrg + '\'' +
                 ", orgPhone='" + orgPhone + '\'' +
                 ", orgEmail='" + orgEmail + '\'' +
                 ", location=" + location +
