@@ -93,7 +93,7 @@ public class OrganizationDaoDBImplTest {
         org1.setOrgDescription("Non Profit");
         org1.setOrgPhone("456-123-8844");
         org1.setOrgEmail("org1@email.com");
-        org1.setHeroOrganization(true);
+        org1.setHeroOrVillainOrg("Hero");
         org1.setLocation(location);
         org1.setMembers(superList);
         org1 = orgDao.addOrganization(org1);
@@ -132,7 +132,7 @@ public class OrganizationDaoDBImplTest {
         org1.setOrgDescription("Non Profit");
         org1.setOrgPhone("456-123-8844");
         org1.setOrgEmail("org1@email.com");
-        org1.setHeroOrganization(true);
+        org1.setHeroOrVillainOrg("Hero");
         org1.setLocation(location);
         org1.setMembers(superList);
         org1 = orgDao.addOrganization(org1);
@@ -174,7 +174,7 @@ public class OrganizationDaoDBImplTest {
         org1.setOrgDescription("Non Profit");
         org1.setOrgPhone("456-123-8844");
         org1.setOrgEmail("org1@email.com");
-        org1.setHeroOrganization(true);
+        org1.setHeroOrVillainOrg("Hero");
         org1.setLocation(location);
         org1.setMembers(superList);
         org1 = orgDao.addOrganization(org1);
@@ -223,7 +223,7 @@ public class OrganizationDaoDBImplTest {
         org1.setOrgDescription("Non Profit");
         org1.setOrgPhone("456-123-8844");
         org1.setOrgEmail("org1@email.com");
-        org1.setHeroOrganization(true);
+        org1.setHeroOrVillainOrg("Hero");
         org1.setLocation(location);
         org1.setMembers(superList);
         org1 = orgDao.addOrganization(org1);
@@ -278,7 +278,7 @@ public class OrganizationDaoDBImplTest {
         org.setOrgDescription("Non Profit");
         org.setOrgPhone("456-123-8844");
         org.setOrgEmail("org1@email.com");
-        org.setHeroOrganization(true);
+        org.setHeroOrVillainOrg("Hero");
         org.setLocation(location);
         org.setMembers(superList);
         org = orgDao.addOrganization(org);
@@ -288,7 +288,7 @@ public class OrganizationDaoDBImplTest {
         org2.setOrgDescription("Non Profit");
         org2.setOrgPhone("456-123-8844");
         org2.setOrgEmail("org1@email.com");
-        org2.setHeroOrganization(true);
+        org2.setHeroOrVillainOrg("Hero");
         org2.setLocation(location);
         org2.setMembers(superList2);
         org2 = orgDao.addOrganization(org2);
@@ -299,7 +299,7 @@ public class OrganizationDaoDBImplTest {
         org3.setOrgDescription("Non Profit");
         org3.setOrgPhone("456-123-8844");
         org3.setOrgEmail("org1@email.com");
-        org3.setHeroOrganization(true);
+        org3.setHeroOrVillainOrg("Hero");
         org3.setLocation(location);
         org3.setMembers(superList);
         org3 = orgDao.addOrganization(org3);
