@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -113,6 +114,14 @@ public class SightingDaoDBImpl implements SightingDao{
     public List<Sighting> getSightingsForLocation(Location location) {
         final String SELECT_SIGHTINGS_FOR_LOC = "SELECT * FROM Sighting WHERE locationId=?";
         List<Sighting> sightings = jdbc.query(SELECT_SIGHTINGS_FOR_LOC, new SightingMapper(), location.getLocationId());
+        associateSuperAndLocations(sightings);
+        return sightings;
+    }
+
+    @Override
+    public List<Sighting> getSightingForDate(LocalDate date) {
+        final String SELECT_SIGHTINGS_FOR_DATE = "SELECT * FROM Sighting WHERE sightingDate=?";
+        List<Sighting> sightings = jdbc.query(SELECT_SIGHTINGS_FOR_DATE, new SightingMapper(), date);
         associateSuperAndLocations(sightings);
         return sightings;
     }

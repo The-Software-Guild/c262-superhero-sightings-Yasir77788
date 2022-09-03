@@ -16,10 +16,14 @@
 <div class="container">
     <div class="row m-4">
         <div class="col text-center border border-dark">
-            <h1><a href="/" class="text-dark">Get sightings for a Character</a></h1>
+            <h1><a href="/" class="text-dark">Get sightings for a Date</a></h1>
         </div>
     </div>
     <div class="row m-4 border border-dark">
+
+        <div class="col text-center m-3">
+            <a href="home" class="btn btn-outline-primary btn-lg">Home</a>
+        </div>
         <div class="col text-center m-3">
             <a href="supers" class="btn btn-outline-primary btn-lg">Super Characters</a>
         </div>
@@ -39,22 +43,22 @@
 
     <div class="row m-4 border border-dark">
         <div class="col-3 text-center m-3">
-            <span class="h3">Provide Super ID</span>
+            <span class="h3">Provide Date</span>
         </div>
         <div class="col-7 text-center m-3">
 
-            <form action="addSuper" method="POST">
+            <form action="sightingsForDate" method="POST">
                 <div class="form-group row">
-                    <label for="superId" class="col-3 col-form-label">
-                        Super ID</label>
+                    <label for="sightingDate" class="col-3 col-form-label">
+                        Date</label>
                     <div class="col-9">
-                        <input type="number" name="superId"
-                               id="superId" class="form-control"/>
+                        <input type="date" name="sightingDate"
+                               id="sightingDate" class="form-control"/>
 
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Add Super Character ID</button>
+                <button type="submit" class="btn btn-primary">Add Date</button>
             </form>
         </div>
     </div>

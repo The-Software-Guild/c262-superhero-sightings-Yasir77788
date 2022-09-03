@@ -97,10 +97,6 @@ public class SuperController {
         return "editSuper";
     }
 
-    @GetMapping("getsuperid")
-    public String getSuperId(Model model) {
-        return "getsuperid";
-    }
 
     @PostMapping("editSuper")
     public String performEditSuper(@Valid Super superObj, HttpServletRequest request, BindingResult result) {

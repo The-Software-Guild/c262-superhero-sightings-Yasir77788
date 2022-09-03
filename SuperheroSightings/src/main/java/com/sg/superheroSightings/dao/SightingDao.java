@@ -4,6 +4,7 @@ import com.sg.superheroSightings.dto.Location;
 import com.sg.superheroSightings.dto.Sighting;
 import com.sg.superheroSightings.dto.Super;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface SightingDao {
@@ -26,7 +27,7 @@ public interface SightingDao {
 
 
 
-//    List<Sighting> getSightingForDate(Date date);
+     List<Sighting> getSightingForDate(LocalDate date);
 
 //    List<Sighting> getSightingsForLocationAndDate(Location location, Date date);
 

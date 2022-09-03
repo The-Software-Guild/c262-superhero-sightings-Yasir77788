@@ -20,6 +20,7 @@ import javax.validation.Valid;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -42,11 +43,11 @@ public class SightingController {
     Set<ConstraintViolation<Sighting>> violations = new HashSet<>();
 
 
-    @GetMapping("/")
+    @GetMapping("home")
     public String displayLatestSightings(Model model) {
         List<Sighting> sightings = sightingDao.getMostRecentSightings();
         model.addAttribute("sightings", sightings);
-        return "recentsightings";
+        return "home";
     }
 
     @GetMapping("sightings")
@@ -130,7 +131,6 @@ public class SightingController {
         }
 
         int sightingId = Integer.parseInt(request.getParameter("id"));
-        System.out.println("The iddddddddddddddddddddddddddddd is " + sightingId);
         sighting = sightingDao.getSightingById(sightingId);
 
 
@@ -147,4 +147,85 @@ public class SightingController {
 
         return "redirect:/sightings";
     }
+
+    @GetMapping("getSuperId")
+    public String getSightingForSuper(Model model) {
+        return "getSuperId";
+    }
+
+    @PostMapping("getSightingsForSuper")
+    public String getSightingForSuper(HttpServletRequest request, Model model) {
+
+//        if(result.hasErrors()) {
+//            return "getSuperId";
+//        }
+
+        int superId = Integer.parseInt(request.getParameter("superId"));
+        List<Sighting> sightingList = new ArrayList<>();
+        Super superObj = superDao.getSuperById(superId);
+
+        sightingList = sightingDao.getSightingForSuper(superObj);
+
+        model.addAttribute("errors", violations);
+        model.addAttribute("sightings", sightingList);
+
+        //return "redirect:/sightings";
+        return "sightingsForAsuper";
+    }
+
+    @GetMapping("getLocationId")
+    public String getSightingForLocation(Model model) {
+        return "getLocationId";
+    }
+
+    @PostMapping("sightingsForLocation")
+    public String getSightingForLocation(HttpServletRequest request, Model model) {
+
+//        if(result.hasErrors()) {
+//            return "getSuperId";
+//        }
+
+        int locationId = Integer.parseInt(request.getParameter("locationId"));
+        List<Sighting> sightingList = new ArrayList<>();
+        Location loc  = locationDao.getLocationById(locationId);
+
+        sightingList = sightingDao.getSightingsForLocation(loc);
+
+        model.addAttribute("errors", violations);
+        model.addAttribute("sightings", sightingList);
+
+        //return "redirect:/sightings";
+        return "sightingsForLocation";
+    }
+
+    @GetMapping("getSightingDate")
+    public String getSightingForDate(Model model) {
+        return "getSightingDate";
+    }
+
+    @PostMapping("sightingsForDate")
+    public String getSightingForDate(HttpServletRequest request, Model model) {
+
+//        if(result.hasErrors()) {
+//            return "getSuperId";
+//        }
+
+        String sightingDateString = request.getParameter("sightingDate");
+
+
+        LocalDate sightingDate = LocalDate.parse(sightingDateString);
+
+        List<Sighting> sightingList = new ArrayList<>();
+        sightingList  = sightingDao.getSightingForDate(sightingDate);
+
+
+
+        model.addAttribute("errors", violations);
+        model.addAttribute("sightings", sightingList);
+
+        return "sightingsForDate";
+    }
+
+
+
 }
