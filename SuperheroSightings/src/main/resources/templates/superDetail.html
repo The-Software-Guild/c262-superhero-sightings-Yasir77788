@@ -8,68 +8,63 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <title>Most recent Sightings</title>
+    <title>Super Details</title>
 </head>
 <body>
 <!-- Main Body of Page -->
-
 <div class="container">
     <div class="row m-4">
         <div class="col text-center border border-dark">
-            <h1>Most Recent Sightings</h1>
+            <h1><a href="/" class="text-dark">Super Hero/Villain Sightings</a></h1>
         </div>
     </div>
-
     <div class="row m-4 border border-dark">
-
         <div class="col text-center m-3">
-            <a href="supers" class="btn btn-outline-primary btn-lg">Super</a>
+            <a href="supers" class="btn btn-outline-primary btn-lg">Super Characters</a>
         </div>
         <div class="col text-center m-3">
             <a href="organizations" class="btn btn-outline-primary btn-lg">Organizations</a>
         </div>
         <div class="col text-center m-3">
-            <a href="locations" class="btn btn-outline-primary btn-lg">Locations</a>
-        </div>
-
-        <div class="col text-center m-3">
             <a href="sightings" class="btn btn-outline-primary btn-lg">Sightings</a>
         </div>
+        <div class="col text-center m-3">
+            <a href="locations" class="btn btn-outline-primary btn-lg">Locations</a>
+        </div>
+    </div>
+    <!-- Form -->
+    <div class="row m-4 border border-dark">
+        <div class="col-6 text-right"><strong>ID</strong></div>
+        <div class="col-6 text-left">
+            <span th:text="${super.superId}">display ID</span>
+        </div>
+
+        <div class="col-6 text-right"><strong>Super Name</strong></div>
+        <div class="col-6 text-left">
+            <span th:text="${super.superName}">display Super Name</span>
+        </div>
+
+        <div class="col-6 text-right"><strong>Super Description</strong></div>
+        <div class="col-6 text-left">
+            <span th:text="${super.superDescription}">display Super Description</span>
+        </div>
+
+        <div class="col-6 text-right"><strong>Super Power</strong></div>
+        <div class="col-6 text-left">
+            <span th:text="${super.superPower}">display Super Power</span>
+        </div>
+
+
+        <div class="col-6 text-right"><strong>Super Classification</strong></div>
+        <div class="col-6 text-left">
+            <span th:text="${super.superStatus}">display Super Classification</span>
+        </div>
+
+
 
     </div>
 </div>
-
-<div class="row m-4 border border-dark">
-    <div class="col text-center m-3">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Sighting Date</th>
-                <th>Location</th>
-                <th>Super Character</th>
-
-
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="sighting : ${sightings}">
-                <td th:text="${sighting.sightingId}">ID</td>
-                <td th:text='${sighting.sightingDate}'>Sighting Date </td>
-                <td th:text="${sighting.location.locationId}">Location  Id</td>
-                <td th:text="${sighting.superObj.superId}">Super  Id</td>
-
-
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-</div>
-
-
 <!-- -->
-
 <!-- End main body -->
 
 <!-- Optional JavaScript -->

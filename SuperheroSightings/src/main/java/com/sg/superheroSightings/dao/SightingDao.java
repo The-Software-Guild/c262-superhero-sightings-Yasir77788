@@ -18,11 +18,17 @@ public interface SightingDao {
 
      void deleteSightingById(int sightingId);
 
+     List<Sighting> getMostRecentSightings();
+
      List<Sighting> getSightingForSuper(Super sp);
 
-      List<Sighting> getSightingsForLocation(Location location);
+     List<Sighting> getSightingsForLocation(Location location);
+
+
 
 //    List<Sighting> getSightingForDate(Date date);
 
 //    List<Sighting> getSightingsForLocationAndDate(Location location, Date date);
+
+
 }

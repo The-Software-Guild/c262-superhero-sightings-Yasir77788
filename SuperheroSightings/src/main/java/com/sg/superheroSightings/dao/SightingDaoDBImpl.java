@@ -102,9 +102,9 @@ public class SightingDaoDBImpl implements SightingDao{
     }
 
     @Override
-    public List<Sighting> getSightingForSuper(Super sp) {
+    public List<Sighting> getSightingForSuper(Super superObj) {
         final String SELECT_SIGHTINGS_FOR_SUPER = "SELECT * FROM Sighting WHERE superId=?";
-        List<Sighting> sightings = jdbc.query(SELECT_SIGHTINGS_FOR_SUPER, new SightingMapper(), sp.getSuperId());
+        List<Sighting> sightings = jdbc.query(SELECT_SIGHTINGS_FOR_SUPER, new SightingMapper(), superObj.getSuperId());
         associateSuperAndLocations(sightings);
         return sightings;
     }
@@ -115,6 +115,17 @@ public class SightingDaoDBImpl implements SightingDao{
         List<Sighting> sightings = jdbc.query(SELECT_SIGHTINGS_FOR_LOC, new SightingMapper(), location.getLocationId());
         associateSuperAndLocations(sightings);
         return sightings;
+    }
+
+    @Override
+    public List<Sighting> getMostRecentSightings() {
+        try {
+            final String SELECT_SIGHTINGS_BY_DATE = "SELECT * FROM Sighting ORDER BY sightingDate DESC LIMIT 10";
+            List<Sighting> sightings = jdbc.query(SELECT_SIGHTINGS_BY_DATE, new SightingMapper());
+            return sightings;
+        } catch (DataAccessException ex) {
+            return null;
+        }
     }
 
 

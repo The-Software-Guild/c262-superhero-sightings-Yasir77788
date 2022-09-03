@@ -1,38 +1,36 @@
 package com.sg.superheroSightings.controllers;
 
 import com.sg.superheroSightings.dao.LocationDao;
-import com.sg.superheroSightings.dao.OrganizationDao;
-import com.sg.superheroSightings.dao.SightingDao;
-import com.sg.superheroSightings.dao.SuperDao;
 import com.sg.superheroSightings.dto.Location;
-import com.sg.superheroSightings.dto.Super;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.Valid;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class LocationController {
     @Autowired
     private LocationDao locationDao;
 
-//    @Autowired
-//    private SuperDao superDao;
-//
-//    @Autowired
-//    private OrganizationDao orgDao;
-//
-//    @Autowired
-//    private SightingDao sightingDao;
+    Set<ConstraintViolation<Location>> violations = new HashSet<>();
 
     @GetMapping("locations")
     public String displayLocations(Model model) {
         List<Location> locations = locationDao.getAllLocations();
+        model.addAttribute("errors", violations);
         model.addAttribute("locations", locations);
+
         return "locations";
     }
 
@@ -59,7 +57,13 @@ public class LocationController {
         loc.setLocationLong(locationLong);
 
 
-        locationDao.addLocation(loc);
+        //locationDao.addLocation(loc);
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(loc);
+
+        if(violations.isEmpty()) {
+            locationDao.addLocation(loc);
+        }
 
         return "redirect:/locations";
     }
@@ -83,9 +87,14 @@ public class LocationController {
     }
 
     @PostMapping("editLocation")
-    public String performEditLocation(HttpServletRequest request) {
+    public String performEditLocation(@Valid Location loc, HttpServletRequest request, BindingResult result) {
+
+        if(result.hasErrors()) {
+            return "editSuper";
+        }
+
         int id = Integer.parseInt(request.getParameter("id"));
-        Location loc = locationDao.getLocationById(id);
+        loc = locationDao.getLocationById(id);
 
         loc.setLocationName(request.getParameter("locationName"));
         loc.setLocationDescription(request.getParameter("locationDescription"));

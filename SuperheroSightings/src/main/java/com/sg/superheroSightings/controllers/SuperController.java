@@ -4,16 +4,22 @@ import com.sg.superheroSightings.dao.LocationDao;
 import com.sg.superheroSightings.dao.OrganizationDao;
 import com.sg.superheroSightings.dao.SightingDao;
 import com.sg.superheroSightings.dao.SuperDao;
-import com.sg.superheroSightings.dto.Location;
 import com.sg.superheroSightings.dto.Super;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.Valid;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class SuperController {
@@ -30,10 +36,13 @@ public class SuperController {
     @Autowired
     private SightingDao sightingDao;
 
+    Set<ConstraintViolation<Super>> violations = new HashSet<>();
+
     @GetMapping("supers")
     public String displaySuperCharacters(Model model) {
         List<Super> supers = superDao.getAllSupers();
         model.addAttribute("supers", supers);
+        model.addAttribute("errors", violations);
         return "supers";
     }
 
@@ -45,15 +54,27 @@ public class SuperController {
         String superPower = request.getParameter("superPower");
         String superStatus = request.getParameter("superStatus");
 
-        Super sp = new Super();
-        sp.setSuperName(superName);
-        sp.setSuperDescription(superDescription);
-        sp.setSuperPower(superPower);
-        sp.setSuperStatus(superStatus);
+        Super superObj = new Super();
+        superObj.setSuperName(superName);
+        superObj.setSuperDescription(superDescription);
+        superObj.setSuperPower(superPower);
+        superObj.setSuperStatus(superStatus);
 
-        superDao.addSuper(sp);
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(superObj);
+
+        if(violations.isEmpty()) {
+            superDao.addSuper(superObj);
+        }
 
         return "redirect:/supers";
+    }
+
+    @GetMapping("superDetail")
+    public String superDetail(Integer id, Model model) {
+        Super superObj = superDao.getSuperById(id);
+        model.addAttribute("super", superObj);
+        return "superDetail";
     }
 
 
@@ -67,6 +88,8 @@ public class SuperController {
 
     @GetMapping("editSuper")
     public String editSuper(HttpServletRequest request, Model model) {
+
+
         int id = Integer.parseInt(request.getParameter("id"));
         Super superObj = superDao.getSuperById(id);
 
@@ -74,22 +97,31 @@ public class SuperController {
         return "editSuper";
     }
 
+    @GetMapping("getsuperid")
+    public String getSuperId(Model model) {
+        return "getsuperid";
+    }
+
     @PostMapping("editSuper")
-    public String performEditSuper(HttpServletRequest request) {
+    public String performEditSuper(@Valid Super superObj, HttpServletRequest request, BindingResult result) {
+
+        if(result.hasErrors()) {
+            return "editSuper";
+        }
+
         int id = Integer.parseInt(request.getParameter("id"));
-        Super superObj = superDao.getSuperById(id);
+        superObj = superDao.getSuperById(id);
 
         superObj.setSuperName(request.getParameter("superName"));
         superObj.setSuperDescription(request.getParameter("superDescription"));
         superObj.setSuperPower(request.getParameter("superPower"));
         superObj.setSuperStatus(request.getParameter("superStatus"));
 
+
         superDao.updateSuper(superObj);
+
 
         return "redirect:/supers";
     }
-
-
-
 
 }

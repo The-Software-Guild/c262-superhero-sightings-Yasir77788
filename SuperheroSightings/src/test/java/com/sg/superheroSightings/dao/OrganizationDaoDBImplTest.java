@@ -2,7 +2,6 @@ package com.sg.superheroSightings.dao;
 
 import com.sg.superheroSightings.dto.Location;
 import com.sg.superheroSightings.dto.Organization;
-import com.sg.superheroSightings.dto.Sighting;
 import com.sg.superheroSightings.dto.Super;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;

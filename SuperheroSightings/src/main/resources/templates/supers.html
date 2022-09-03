@@ -38,10 +38,16 @@
     <!-- add - putting an Add Super form in place-->
 
     <div class="row m-4 border border-dark">
+        <div class="col-12 m-1 text-center"
+             th:if="${!errors.isEmpty()}">
+            <p class="alert alert-danger" th:each="error : ${errors}"
+               th:text="${error.message}">Error message</p>
+        </div>
         <div class="col-3 text-center m-3">
             <span class="h3">Add Super</span>
         </div>
         <div class="col-7 text-center m-3">
+
             <form action="addSuper" method="POST">
                 <div class="form-group row">
                     <label for="superName" class="col-3 col-form-label">
@@ -49,6 +55,7 @@
                     <div class="col-9">
                         <input type="text" name="superName"
                                id="superName" class="form-control"/>
+
                     </div>
                 </div>
                 <div class="form-group row">
@@ -94,6 +101,7 @@
                     <th>Super Description</th>
                     <th>Super Power </th>
                     <th>Super Type</th>
+                    <th>Details</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -105,6 +113,7 @@
                     <td th:text="${s.superDescription}">Description</td>
                     <td th:text="${s.superPower}">Power</td>
                     <td th:text="${s.superStatus}">Super Type</td>
+                    <td><a href="#" th:href="@{/superDetail(id=${s.superId})}">Details</a></td>
                     <td><a href="#" th:href="@{/editSuper(id=${s.superId})}">Edit</a></td>
                     <td><a href="#" th:href="@{/deleteSuper(id=${s.superId})}">Delete</a></td>
                 </tr>

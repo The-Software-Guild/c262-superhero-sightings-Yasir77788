@@ -2,11 +2,11 @@ package com.sg.superheroSightings.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Objects;
 
 
 public class Super {
-
 
     private int superId;
 
