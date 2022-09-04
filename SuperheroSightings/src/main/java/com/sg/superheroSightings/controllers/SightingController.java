@@ -7,6 +7,7 @@ import com.sg.superheroSightings.dao.SuperDao;
 import com.sg.superheroSightings.dto.Location;
 import com.sg.superheroSightings.dto.Sighting;
 import com.sg.superheroSightings.dto.Super;
+import com.sg.superheroSightings.service.SuperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,11 +41,23 @@ public class SightingController {
     @Autowired
     private SightingDao sightingDao;
 
+    @Autowired
+    private SuperService superService;
+
     Set<ConstraintViolation<Sighting>> violations = new HashSet<>();
+    private boolean displayImg = false;
 
 
     @GetMapping("home")
     public String displayLatestSightings(Model model) {
+//        Super superObj = superDao.getSuperById(id);
+//        model.addAttribute("super", superObj);
+//
+//        displayImg = superService.isImageSet(superObj.getSuperId()+"");
+//        List<Sighting> sightings = sightingDao.getMostRecentSightings();
+//
+//        model.addAttribute("sightings", sightings);
+//        model.addAttribute("displayImg",displayImg);
         List<Sighting> sightings = sightingDao.getMostRecentSightings();
         model.addAttribute("sightings", sightings);
         return "home";
@@ -79,7 +92,6 @@ public class SightingController {
         sighting.setSightingDate(sightingDate);
         sighting.setSuperObj(superDao.getSuperById(Integer.parseInt(superId)));
         sighting.setLocation(locationDao.getLocationById(Integer.parseInt(locationId)));
-        sightingDao.addSighting(sighting);
 
         Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
         violations = validate.validate(sighting);
@@ -96,6 +108,7 @@ public class SightingController {
     @GetMapping("sightingDetail")
     public String sightingDetail(Integer id, Model model) {
         Sighting sighting = sightingDao.getSightingById(id);
+
         model.addAttribute("sighting", sighting);
         return "sightingDetail";
     }

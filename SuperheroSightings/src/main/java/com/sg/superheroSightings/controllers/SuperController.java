@@ -5,18 +5,22 @@ import com.sg.superheroSightings.dao.OrganizationDao;
 import com.sg.superheroSightings.dao.SightingDao;
 import com.sg.superheroSightings.dao.SuperDao;
 import com.sg.superheroSightings.dto.Super;
+import com.sg.superheroSightings.service.SuperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,7 +40,12 @@ public class SuperController {
     @Autowired
     private SightingDao sightingDao;
 
+    @Autowired
+    private SuperService superService;
+
+
     Set<ConstraintViolation<Super>> violations = new HashSet<>();
+    private boolean displayImg = false;
 
     @GetMapping("supers")
     public String displaySuperCharacters(Model model) {
@@ -48,7 +57,8 @@ public class SuperController {
 
 
     @PostMapping("addSuper")
-    public String addSuper(HttpServletRequest request) {
+    public String addSuper(HttpServletRequest request,
+                           Model model, @RequestParam("image") MultipartFile multipartFile) {
         String superName = request.getParameter("superName");
         String superDescription = request.getParameter("superDescription");
         String superPower = request.getParameter("superPower");
@@ -67,6 +77,18 @@ public class SuperController {
             superDao.addSuper(superObj);
         }
 
+        if(!multipartFile.isEmpty()){
+            String fileName = superObj.getSuperId()+"";
+
+            try {
+                superService.uploadFile(fileName, multipartFile);
+            } catch (IOException ex) {
+                System.out.println("File could not be saved");
+            }
+        }
+        model.addAttribute("errors", violations);
+
+
         return "redirect:/supers";
     }
 
@@ -74,6 +96,9 @@ public class SuperController {
     public String superDetail(Integer id, Model model) {
         Super superObj = superDao.getSuperById(id);
         model.addAttribute("super", superObj);
+
+        displayImg = superService.isImageSet(superObj.getSuperId()+"");
+        model.addAttribute("displayImg",displayImg);
         return "superDetail";
     }
 
@@ -89,19 +114,20 @@ public class SuperController {
     @GetMapping("editSuper")
     public String editSuper(HttpServletRequest request, Model model) {
 
-
         int id = Integer.parseInt(request.getParameter("id"));
         Super superObj = superDao.getSuperById(id);
 
         model.addAttribute("super", superObj);
+        model.addAttribute("errors", violations);
         return "editSuper";
     }
 
 
     @PostMapping("editSuper")
-    public String performEditSuper(@Valid Super superObj, HttpServletRequest request, BindingResult result) {
+    public String performEditSuper(@Valid Super superObj, HttpServletRequest request, BindingResult result,
+              Model model, @RequestParam("image") MultipartFile multipartFile) {
 
-        if(result.hasErrors()) {
+        if (result.hasErrors()) {
             return "editSuper";
         }
 
@@ -113,11 +139,31 @@ public class SuperController {
         superObj.setSuperPower(request.getParameter("superPower"));
         superObj.setSuperStatus(request.getParameter("superStatus"));
 
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(superObj);
 
-        superDao.updateSuper(superObj);
+        if (violations.isEmpty()) {
+            superDao.updateSuper(superObj);
+            if(!multipartFile.isEmpty()){
+                String fileName = superObj.getSuperId()+"";
+
+                try {
+                    superService.uploadFile(fileName, multipartFile);
+                } catch (IOException ex) {
+                    System.out.println("File could not be saved");
+                }
+            }
+            return "redirect:/supers";
+        } else {
+
+            superObj = superDao.getSuperById(superObj.getSuperId());
+            model.addAttribute("errors", violations);
+            model.addAttribute("super", superObj);
+        }
 
 
         return "redirect:/supers";
+
     }
 
 }

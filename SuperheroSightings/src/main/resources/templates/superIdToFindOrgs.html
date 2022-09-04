@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <title>Super Characters</title>
+    <title>Orgs for Super</title>
 </head>
 <body>
 <!-- Main Body of Page -->
@@ -16,7 +16,7 @@
 <div class="container">
     <div class="row m-4">
         <div class="col text-center border border-dark">
-            <h1><a href="/" class="text-dark">Get sightings for a Location</a></h1>
+            <h1><a href="/" class="text-dark">Get Organizations for a Character</a></h1>
         </div>
     </div>
     <div class="row m-4 border border-dark">
@@ -44,22 +44,22 @@
 
     <div class="row m-4 border border-dark">
         <div class="col-3 text-center m-3">
-            <span class="h3">Provide Location ID</span>
+            <span class="h3">Provide Super ID</span>
         </div>
         <div class="col-7 text-center m-3">
 
-            <form action="sightingsForLocation" method="POST">
+            <form action="orgsForAsuper" method="POST">
                 <div class="form-group row">
-                    <label for="locationId" class="col-3 col-form-label">
-                        Location ID</label>
+                    <label for="superId" class="col-3 col-form-label">
+                        Super ID</label>
                     <div class="col-9">
-                        <input type="number" name="locationId"
-                               id="locationId" class="form-control"/>
+                        <input type="number" name="superId"
+                               id="superId" class="form-control"/>
 
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Add Location ID</button>
+                <button type="submit" class="btn btn-primary">Add Super Character ID</button>
             </form>
         </div>
     </div>

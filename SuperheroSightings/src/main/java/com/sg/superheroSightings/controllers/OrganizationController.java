@@ -6,6 +6,7 @@ import com.sg.superheroSightings.dao.SightingDao;
 import com.sg.superheroSightings.dao.SuperDao;
 import com.sg.superheroSightings.dto.Location;
 import com.sg.superheroSightings.dto.Organization;
+import com.sg.superheroSightings.dto.Sighting;
 import com.sg.superheroSightings.dto.Super;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -105,6 +106,30 @@ public class OrganizationController {
         orgDao.updateOrganization(org);
 
         return "redirect:/organizations";
+    }
+
+    @GetMapping("superIdToFindOrgs")
+    public String getOrgsForAsuperChar(Model model) {
+        return "superIdToFindOrgs";
+    }
+
+    @PostMapping("orgsForAsuper")
+    public String getOrgsForAsuper(HttpServletRequest request, Model model) {
+
+//        if(result.hasErrors()) {
+//            return "getSuperId";
+//        }
+
+        int superId = Integer.parseInt(request.getParameter("superId"));
+        List<Organization> orgList = new ArrayList<>();
+        Super superObj = superDao.getSuperById(superId);
+
+        orgList = orgDao.getOrgsForSuper(superObj);
+
+        model.addAttribute("orgs", orgList);
+
+        //return "redirect:/sightings";
+        return "orgsForAsuper";
     }
 
 

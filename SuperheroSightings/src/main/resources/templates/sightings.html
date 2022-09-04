@@ -21,16 +21,17 @@
     <div class="row m-4 border border-dark">
 
         <div class="col text-center m-3">
-            <a href="home" class="btn btn-outline-primary btn-lg">Home</a>
+            <a href="home" class="btn btn-outline-primary btn-lg"><FONT COLOR=green>Home</font></a>
+
         </div>
         <div class="col text-center m-3">
-            <a href="supers" class="btn btn-outline-primary btn-lg">Super Characters</a>
+            <a href="supers" class="btn btn-outline-primary btn-lg"><FONT COLOR=orange>Super Characters</font></a>
         </div>
         <div class="col text-center m-3">
-            <a href="organizations" class="btn btn-outline-primary btn-lg">Organizations</a>
+            <a href="organizations" class="btn btn-outline-primary btn-lg"><FONT COLOR=black>Organizations</font></a>
         </div>
         <div class="col text-center m-3">
-            <a href="sightings" class="btn btn-outline-primary btn-lg">Sightings</a>
+            <a href="sightings" class="btn btn-outline-primary btn-lg"><FONT COLOR=red>Sightings</font></a>
         </div>
         <div class="col text-center m-3">
             <a href="locations" class="btn btn-outline-primary btn-lg">Locations</a>
@@ -103,8 +104,8 @@
                 <tr>
                     <th>ID</th>
                     <th>Sighting Date</th>
-                    <th>Location ID</th>
-                    <th>Super Character ID</th>
+                    <th>Location City</th>
+                    <th>Classification</th>
                     <th>Details</th>
                     <th>Edit</th>
                     <th>Delete</th>
@@ -115,8 +116,8 @@
                 <tr th:each="sighting : ${sightings}">
                     <td th:text="${sighting.sightingId}">ID</td>
                     <td th:text='${sighting.sightingDate}'>Sighting Date </td>
-                    <td th:text="${sighting.location.locationId}">Location  Id</td>
-                    <td th:text="${sighting.superObj.superId}">Super Id</td>
+                    <td th:text="${sighting.location.getCity}">Location  City</td>
+                    <td th:text="${sighting.superObj.getSuperStatus}">Classification</td>
                     <td><a href="#" th:href="@{/sightingDetail(id=${sighting.sightingId})}">Details</a></td>
                     <td><a href="#" th:href="@{/editSighting(id=${sighting.sightingId})}">Edit</a></td>
                     <td><a href="#" th:href="@{/deleteSighting(id=${sighting.sightingId})}">Delete</a></td>
