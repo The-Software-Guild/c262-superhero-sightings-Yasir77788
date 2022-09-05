@@ -15,8 +15,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class OrganizationController {
@@ -32,6 +37,8 @@ public class OrganizationController {
 
     @Autowired
     private SightingDao sightingDao;
+
+    Set<ConstraintViolation<Super>> violations = new HashSet<>();
 
     @GetMapping("organizations")
     public String displayOrganizations(Model model) {
@@ -92,22 +99,55 @@ public class OrganizationController {
     }
 
     @PostMapping("editOrganization")
-    public String performEditOrganization(Organization org, HttpServletRequest request) {
+    public String editOrganization(Organization org, HttpServletRequest request, Model model){
+        //violations.clear();
+
+        int orgId = Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("orgName");
+        String heroOrVillainOrg = request.getParameter("heroOrVillainOrg");
+        String description = request.getParameter("orgDescription");
+
+
         String locationId = request.getParameter("locationId");
         String[] superIds = request.getParameterValues("superId");
 
-        org.setLocation(locationDao.getLocationById(Integer.parseInt(locationId)));
 
         List<Super> superList = new ArrayList<>();
-        for(String superId : superIds) {
-            superList.add(superDao.getSuperById(Integer.parseInt(superId)));
+        if(superIds != null) {
+            for(String superId : superIds) {
+                superList.add(superDao.getSuperById(Integer.parseInt(superId)));
+            }
         }
+
+
+        org.setOrgId(orgId);
+        org.setOrgName(name);
+        org.setHeroOrVillainOrg(heroOrVillainOrg);
+        org.setOrgDescription(description);
         org.setMembers(superList);
+        org.setLocation(locationDao.getLocationById(Integer.parseInt(locationId)));
+
+       // Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
         orgDao.updateOrganization(org);
-
         return "redirect:/organizations";
-    }
 
+
+//        violations = validate.validate(org);
+//        if(violations.isEmpty()){
+//            orgDao.updateOrganization(org);
+//            return "redirect:/organizations";
+//        } else {
+//            org = orgDao.getOrganizationById(org.getOrgId());
+//            model.addAttribute("org", org);
+//
+//            superList = superDao.getAllSupers();
+//            model.addAttribute("supers", superList);
+//
+//            model.addAttribute("errors", violations);
+//
+//            return "editOrganization";
+//        }
+    }
     @GetMapping("superIdToFindOrgs")
     public String getOrgsForAsuperChar(Model model) {
         return "superIdToFindOrgs";

@@ -50,14 +50,6 @@ public class SightingController {
 
     @GetMapping("home")
     public String displayLatestSightings(Model model) {
-//        Super superObj = superDao.getSuperById(id);
-//        model.addAttribute("super", superObj);
-//
-//        displayImg = superService.isImageSet(superObj.getSuperId()+"");
-//        List<Sighting> sightings = sightingDao.getMostRecentSightings();
-//
-//        model.addAttribute("sightings", sightings);
-//        model.addAttribute("displayImg",displayImg);
         List<Sighting> sightings = sightingDao.getMostRecentSightings();
         model.addAttribute("sightings", sightings);
         return "home";
@@ -67,6 +59,7 @@ public class SightingController {
     public String displaySightings(Model model) {
         List<Sighting> sightings = sightingDao.getAllSightings();
         List<Location>  locations = locationDao.getAllLocations();
+
         List<Super> supers = superDao.getAllSupers();
 
         model.addAttribute("errors", violations);
@@ -86,6 +79,7 @@ public class SightingController {
         String sightingDateString = request.getParameter("sightingDate");
         String superId  = request.getParameter("superId");
         String locationId = request.getParameter("locationId");
+
 
         LocalDate sightingDate = LocalDate.parse(sightingDateString);
 
@@ -108,6 +102,9 @@ public class SightingController {
     @GetMapping("sightingDetail")
     public String sightingDetail(Integer id, Model model) {
         Sighting sighting = sightingDao.getSightingById(id);
+
+        displayImg = superService.isImageSet(sighting.getSuperObj().getSuperId()+"");
+        model.addAttribute("displayImg",displayImg);
 
         model.addAttribute("sighting", sighting);
         return "sightingDetail";
@@ -132,12 +129,13 @@ public class SightingController {
         model.addAttribute("sighting", sighting);
         model.addAttribute("supers", supers);
         model.addAttribute("locations", locations);
+        model.addAttribute("errors", violations);
         return "editSighting";
     }
 
     @PostMapping("editSighting")
     public String performEditSighting(@Valid Sighting sighting, HttpServletRequest request,
-                                      BindingResult result) {
+                                      BindingResult result, Model model) {
 
         if(result.hasErrors()) {
             return "editSighting";
@@ -156,7 +154,16 @@ public class SightingController {
         sighting.setLocation(locationDao.getLocationById(Integer.parseInt(locationId)));
         sighting.setSuperObj(superDao.getSuperById(Integer.parseInt(superId)));
 
-        sightingDao.updateSighting(sighting);
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(sighting);
+        if (violations.isEmpty()) {
+            sightingDao.updateSighting(sighting);
+        } else {
+
+            sighting = sightingDao.getSightingById(sighting.getSightingId());
+            model.addAttribute("errors", violations);
+            model.addAttribute("sighting", sighting);
+        }
 
         return "redirect:/sightings";
     }
