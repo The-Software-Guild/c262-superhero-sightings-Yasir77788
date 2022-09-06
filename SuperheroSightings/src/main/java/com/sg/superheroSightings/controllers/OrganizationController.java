@@ -127,26 +127,9 @@ public class OrganizationController {
         org.setMembers(superList);
         org.setLocation(locationDao.getLocationById(Integer.parseInt(locationId)));
 
-       // Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+         Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
         orgDao.updateOrganization(org);
         return "redirect:/organizations";
-
-
-//        violations = validate.validate(org);
-//        if(violations.isEmpty()){
-//            orgDao.updateOrganization(org);
-//            return "redirect:/organizations";
-//        } else {
-//            org = orgDao.getOrganizationById(org.getOrgId());
-//            model.addAttribute("org", org);
-//
-//            superList = superDao.getAllSupers();
-//            model.addAttribute("supers", superList);
-//
-//            model.addAttribute("errors", violations);
-//
-//            return "editOrganization";
-//        }
     }
     @GetMapping("superIdToFindOrgs")
     public String getOrgsForAsuperChar(Model model) {
@@ -156,10 +139,6 @@ public class OrganizationController {
     @PostMapping("orgsForAsuper")
     public String getOrgsForAsuper(HttpServletRequest request, Model model) {
 
-//        if(result.hasErrors()) {
-//            return "getSuperId";
-//        }
-
         int superId = Integer.parseInt(request.getParameter("superId"));
         List<Organization> orgList = new ArrayList<>();
         Super superObj = superDao.getSuperById(superId);
@@ -168,7 +147,6 @@ public class OrganizationController {
 
         model.addAttribute("orgs", orgList);
 
-        //return "redirect:/sightings";
         return "orgsForAsuper";
     }
 

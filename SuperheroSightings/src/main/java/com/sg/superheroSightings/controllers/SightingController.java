@@ -176,10 +176,6 @@ public class SightingController {
     @PostMapping("getSightingsForSuper")
     public String getSightingForSuper(HttpServletRequest request, Model model) {
 
-//        if(result.hasErrors()) {
-//            return "getSuperId";
-//        }
-
         int superId = Integer.parseInt(request.getParameter("superId"));
         List<Sighting> sightingList = new ArrayList<>();
         Super superObj = superDao.getSuperById(superId);
@@ -189,7 +185,6 @@ public class SightingController {
         model.addAttribute("errors", violations);
         model.addAttribute("sightings", sightingList);
 
-        //return "redirect:/sightings";
         return "sightingsForAsuper";
     }
 
@@ -201,10 +196,6 @@ public class SightingController {
     @PostMapping("sightingsForLocation")
     public String getSightingForLocation(HttpServletRequest request, Model model) {
 
-//        if(result.hasErrors()) {
-//            return "getSuperId";
-//        }
-
         int locationId = Integer.parseInt(request.getParameter("locationId"));
         List<Sighting> sightingList = new ArrayList<>();
         Location loc  = locationDao.getLocationById(locationId);
@@ -214,7 +205,6 @@ public class SightingController {
         model.addAttribute("errors", violations);
         model.addAttribute("sightings", sightingList);
 
-        //return "redirect:/sightings";
         return "sightingsForLocation";
     }
 
@@ -226,9 +216,6 @@ public class SightingController {
     @PostMapping("sightingsForDate")
     public String getSightingForDate(HttpServletRequest request, Model model) {
 
-//        if(result.hasErrors()) {
-//            return "getSuperId";
-//        }
 
         String sightingDateString = request.getParameter("sightingDate");
 
