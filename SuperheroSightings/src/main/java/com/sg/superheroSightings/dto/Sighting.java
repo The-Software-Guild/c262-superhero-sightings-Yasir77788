@@ -14,11 +14,11 @@ public class Sighting {
     private LocalDate sightingDate;
 
     //@NotBlank(message = "Sighting location must not be empty.")
-    @NotNull(message = "Sighting-location must not be null")
+    //@NotNull(message = "Sighting-location must not be null")
     private Location location;
 
     //@NotBlank(message = "Sighting super must not be empty.")
-    @NotNull(message = "Sighting-super must not be null.")
+    //@NotNull(message = "Sighting-super must not be null.")
     private Super superObj;
 
     public Sighting() {
