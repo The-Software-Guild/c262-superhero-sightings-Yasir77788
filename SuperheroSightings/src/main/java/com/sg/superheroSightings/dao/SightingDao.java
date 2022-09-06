@@ -17,13 +17,13 @@ public interface SightingDao {
 
       void updateSighting(Sighting sighting);
 
-     void deleteSightingById(int sightingId);
+      void deleteSightingById(int sightingId);
 
-     List<Sighting> getMostRecentSightings();
+      List<Sighting> getMostRecentSightings();
 
-     List<Sighting> getSightingForSuper(Super sp);
+      List<Sighting> getSightingForSuper(Super sp);
 
-     List<Sighting> getSightingsForLocation(Location location);
+      List<Sighting> getSightingsForLocation(Location location);
 
 
 
