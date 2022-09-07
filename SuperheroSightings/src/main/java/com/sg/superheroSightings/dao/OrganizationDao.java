@@ -18,5 +18,5 @@ public interface OrganizationDao {
         void deleteOrganizationById(int orgId);
 
         List<Organization> getOrgsForSuper(Super sp);
-        
+
 }
