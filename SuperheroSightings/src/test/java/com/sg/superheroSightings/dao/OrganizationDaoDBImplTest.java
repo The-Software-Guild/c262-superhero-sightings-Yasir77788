@@ -309,6 +309,60 @@ public class OrganizationDaoDBImplTest {
         assertFalse(orgs.contains(org2));
         assertTrue(orgs.contains(org3));
 
+    }
+
+    @Test
+    public void testGetOrgsForSuper() {
+        Location location = new Location();
+        location.setLocationName("Music Corner");
+        location.setLocationDescription("The location on the corner");
+        location.setStreet("1234 First Street");
+        location.setCity("Music city");
+        location.setState("MC");
+        location.setZipCode("89098");
+        location.setLocationLat("123-ac-487");
+        location.setLocationLong("342-da-873");
+        locationDao.addLocation(location);
+
+
+        Super testSuper = new Super();
+        testSuper.setSuperName("Superhuman");
+        testSuper.setSuperDescription("A person with good super skills");
+        testSuper.setSuperPower("x-ray vision");
+        testSuper.setSuperStatus("Hero");
+        testSuper = superDao.addSuper(testSuper);
+
+        List<Super> superList = new ArrayList<>();
+        superList.add(testSuper);
+
+        Organization org1 = new Organization();
+        org1.setOrgName("Test ABC Org");
+        org1.setOrgDescription("Non Profit");
+        org1.setOrgPhone("456-123-8844");
+        org1.setOrgEmail("org1@email.com");
+        org1.setHeroOrVillainOrg("Hero");
+        org1.setLocation(location);
+        org1.setMembers(superList);
+        org1 = orgDao.addOrganization(org1);
+
+
+        Organization org2 = new Organization();
+        org2.setOrgName("Test ABC Org");
+        org2.setOrgDescription("Non Profit");
+        org2.setOrgPhone("456-123-8844");
+        org2.setOrgEmail("org1@email.com");
+        org2.setHeroOrVillainOrg("Hero");
+        org2.setLocation(location);
+        org2.setMembers(superList);
+        org2 = orgDao.addOrganization(org2);
+
+
+
+        List<Organization> orgList = orgDao.getOrgsForSuper(testSuper);
+
+        assertEquals(2, orgList.size());
+        assertTrue(orgList.contains(org2));
 
     }
+
 }
